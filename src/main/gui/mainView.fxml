@@ -66,16 +66,25 @@
                      <padding>
                         <Insets left="5.0" />
                      </padding>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
                   </Label>
                   <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="26.0" text="-">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="26.0" text="+">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
                   </Button>
                </children>
             </HBox>
