@@ -65,4 +65,10 @@ public class mainViewController {
             e.printStackTrace();
         }
     }
+
+    public void handleEditCategory(ActionEvent actionEvent) {
+    }
+
+    public void handleEditMovie(ActionEvent actionEvent) {
+    }
 }
