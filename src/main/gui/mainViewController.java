@@ -10,6 +10,7 @@ import main.be.Category;
 import main.be.Video;
 import main.bll.CategoryManager;
 import main.bll.VideoManager;
+import main.gui.editCategory.EditCategoryController;
 import main.gui.newCategory.NewCategoryController;
 import main.gui.newVideo.NewVideoController;
 
@@ -42,7 +43,7 @@ public class mainViewController {
         
     }
 
-    public void handleEditCategory(ActionEvent actionEvent) {
+    public void handleEditCategory(ActionEvent actionEvent) {openEditCategory("editCategory/EditCategory.fxml");
     }
 /*
         Movie buttons
@@ -65,6 +66,21 @@ public class mainViewController {
             loader.setLocation(getClass().getResource(fxmlPath));
             Parent mainLayout = loader.load();
             NewCategoryController cvc = loader.getController();
+            cvc.setManager(this.cMan);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(mainLayout));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openEditCategory(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(fxmlPath));
+            Parent mainLayout = loader.load();
+            EditCategoryController cvc = loader.getController();
             cvc.setManager(this.cMan);
             Stage stage = new Stage();
             stage.setScene(new Scene(mainLayout));
