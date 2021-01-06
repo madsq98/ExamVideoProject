@@ -44,6 +44,7 @@ public class mainViewController {
         
     }
 
+
     public void handleEditCategory(ActionEvent actionEvent) {openEditCategory("editCategory/EditCategoryView.fxml");
     }
 /*
@@ -55,8 +56,8 @@ public class mainViewController {
 
     }
 
-    public void handleEditMovie(ActionEvent actionEvent) {openEditMovie("editVideo/EditVideoView.fxml");
-    }
+
+    public void handleEditMovie(ActionEvent actionEvent) {openEditMovie("editVideo/EditVideoView.fxml");    }
 
 /*
         Methods to open Views
@@ -75,6 +76,7 @@ public class mainViewController {
             e.printStackTrace();
         }
     }
+
 
     public void openNewMovie(String fxmlPath) {
         try {
@@ -120,8 +122,5 @@ public class mainViewController {
             e.printStackTrace();
         }
     }
-
-
-
 
 }

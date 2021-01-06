@@ -9,6 +9,7 @@ import main.bll.CategoryManager;
 
 public class EditCategoryController {
     public TextField txtCategory;
+
     public Button btnCancelEditCategory;
 
     private CategoryManager cMan;
@@ -20,10 +21,12 @@ public class EditCategoryController {
     public void handleSave(ActionEvent actionEvent) {
     }
 
+
     public void setManager(CategoryManager cMan) {this.cMan = cMan;    }
 
     private void closeWin(){
         Stage stage = (Stage) btnCancelEditCategory.getScene().getWindow();
         stage.close();
+
     }
 }
