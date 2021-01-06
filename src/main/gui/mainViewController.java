@@ -43,7 +43,7 @@ public class mainViewController {
         
     }
 
-    public void handleEditCategory(ActionEvent actionEvent) {openEditCategory("editCategory/EditCategory.fxml");
+    public void handleEditCategory(ActionEvent actionEvent) {openEditCategory("editCategory/EditCategoryView.fxml");
     }
 /*
         Movie buttons
