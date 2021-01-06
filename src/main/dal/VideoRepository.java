@@ -3,12 +3,13 @@ package main.dal;
 import javafx.collections.ObservableList;
 import main.be.Video;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.Collection;
 
 public class VideoRepository {
 
-    private Collection collection;
+    private Connection connection;
 
 
     public ObservableList<Video> loadVideos(){
