@@ -14,7 +14,7 @@
    <top>
       <VBox prefHeight="29.0" prefWidth="270.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="500.0" text="New Category">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="500.0" text="Edit Category">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -51,7 +51,7 @@
             </HBox>
             <HBox prefHeight="25.0" prefWidth="270.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="55.0" text="Cancel">
+                  <Button fx:id="btnCancelEditCategory" cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="55.0" text="Cancel">
                      <HBox.margin>
                         <Insets left="160.0" right="15.0" />
                      </HBox.margin>
