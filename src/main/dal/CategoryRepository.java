@@ -10,8 +10,11 @@ public class CategoryRepository {
 
     private Connection connection;
 
-    public ObservableList<> loadCategories(){
 
+    public ObservableList<Category> loadCategories(){
+
+
+        return null;
     }
 
     public void delete(Category categoryToDelete){
@@ -26,19 +29,19 @@ public class CategoryRepository {
 
     }
 
-    public void saveAllLinks(Category){
+    public void saveAllLinks(Category c){
 
     }
 
-    public void ObservableList(Category){
+    public void ObservableList(Category c){
 
     }
 
-    public void saveLink(Category, Video){
+    public void saveLink(Category c, Video v){
 
     }
 
-    public void deleteLink(Category,Video){
+    public void deleteLink(Category c,Video v){
 
     }
 }
