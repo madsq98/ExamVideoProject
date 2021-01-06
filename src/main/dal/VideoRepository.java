@@ -3,6 +3,7 @@ package main.dal;
 import javafx.collections.ObservableList;
 import main.be.Video;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 public class VideoRepository {
@@ -14,15 +15,15 @@ public class VideoRepository {
 
     }
 
-    public void delete(Video){
+    public void delete(Video videoToDelete){
 
     }
 
-    public void add(Video){
+    public void add(Video videoToAdd){
 
     }
 
-    public void update(Video){
+    public void update(Video videoToUpdate, String name, Double rating, String path, LocalDate lastView){
 
     }
 }
