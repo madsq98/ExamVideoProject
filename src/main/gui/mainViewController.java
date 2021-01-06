@@ -11,6 +11,7 @@ import main.be.Video;
 import main.bll.CategoryManager;
 import main.bll.VideoManager;
 import main.gui.editCategory.EditCategoryController;
+import main.gui.editVideo.EditVideoController;
 import main.gui.newCategory.NewCategoryController;
 import main.gui.newVideo.NewVideoController;
 
@@ -54,7 +55,7 @@ public class mainViewController {
 
     }
 
-    public void handleEditMovie(ActionEvent actionEvent) {
+    public void handleEditMovie(ActionEvent actionEvent) {openEditMovie("editVideo/EditVideoView.fxml");
     }
 
 /*
@@ -96,6 +97,21 @@ public class mainViewController {
             loader.setLocation(getClass().getResource(fxmlPath));
             Parent mainLayout = loader.load();
             NewVideoController cvc = loader.getController();
+            cvc.setManager(this.vMan);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(mainLayout));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openEditMovie(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(fxmlPath));
+            Parent mainLayout = loader.load();
+            EditVideoController cvc = loader.getController();
             cvc.setManager(this.vMan);
             Stage stage = new Stage();
             stage.setScene(new Scene(mainLayout));
