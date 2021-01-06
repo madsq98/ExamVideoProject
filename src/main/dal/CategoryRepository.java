@@ -10,7 +10,7 @@ public class CategoryRepository {
 
     private Connection connection;
 
-    public ObservableList<> loadCategories(){
+    public ObservableList<Category> loadCategories(){
 
     }
 
