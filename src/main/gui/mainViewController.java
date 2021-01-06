@@ -57,7 +57,9 @@ public class mainViewController {
     }
 
 
+
     public void handleEditMovie(ActionEvent actionEvent) {openEditMovie("editVideo/EditVideoView.fxml");    }
+
 
 /*
         Methods to open Views
@@ -108,7 +110,9 @@ public class mainViewController {
         }
     }
 
+
     public void openEditCategory(String fxmlPath) {
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlPath));

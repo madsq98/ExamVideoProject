@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import main.be.Video;
+import main.bll.CategoryManager;
+
 import main.bll.VideoManager;
 
 public class EditVideoController {
@@ -30,5 +33,7 @@ public class EditVideoController {
     private void closeWin(){
         Stage stage = (Stage) btnCancelEditVideo.getScene().getWindow();
         stage.close();
+
+
     }
 }
