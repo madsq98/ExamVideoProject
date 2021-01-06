@@ -18,6 +18,7 @@ public class Video {
         this.path = new SimpleStringProperty();
         setName(name);
         setPath(path);
+        setRating(0.0);
     }
 
     public void setId(int id) {
