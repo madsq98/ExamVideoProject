@@ -42,6 +42,8 @@ public class mainViewController {
         
     }
 
+    public void handleEditCategory(ActionEvent actionEvent) {
+    }
 /*
         Movie buttons
  */
@@ -49,6 +51,9 @@ public class mainViewController {
 
     public void handleRemoveMovie(ActionEvent actionEvent) {
 
+    }
+
+    public void handleEditMovie(ActionEvent actionEvent) {
     }
 
 /*
@@ -84,9 +89,5 @@ public class mainViewController {
         }
     }
 
-    public void handleEditCategory(ActionEvent actionEvent) {
-    }
 
-    public void handleEditMovie(ActionEvent actionEvent) {
-    }
 }
