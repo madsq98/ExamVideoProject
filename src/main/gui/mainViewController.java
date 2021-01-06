@@ -44,7 +44,6 @@ public class mainViewController {
         
     }
 
-
     public void handleEditCategory(ActionEvent actionEvent) {openEditCategory("editCategory/EditCategoryView.fxml");
     }
 /*
@@ -56,10 +55,8 @@ public class mainViewController {
 
     }
 
-
-
-    public void handleEditMovie(ActionEvent actionEvent) {openEditMovie("editVideo/EditVideoView.fxml");    }
-
+    public void handleEditMovie(ActionEvent actionEvent) {openEditMovie("editVideo/EditVideoView.fxml");
+    }
 
 /*
         Methods to open Views
@@ -79,6 +76,20 @@ public class mainViewController {
         }
     }
 
+    public void openEditCategory(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(fxmlPath));
+            Parent mainLayout = loader.load();
+            EditCategoryController cvc = loader.getController();
+            cvc.setManager(this.cMan);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(mainLayout));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void openNewMovie(String fxmlPath) {
         try {
@@ -110,21 +121,5 @@ public class mainViewController {
         }
     }
 
-
-    public void openEditCategory(String fxmlPath) {
-
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource(fxmlPath));
-            Parent mainLayout = loader.load();
-            EditCategoryController cvc = loader.getController();
-            cvc.setManager(this.cMan);
-            Stage stage = new Stage();
-            stage.setScene(new Scene(mainLayout));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

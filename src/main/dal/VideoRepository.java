@@ -18,6 +18,7 @@ public class VideoRepository {
 
     public void delete(Video videoToDelete){
 
+        String query = "DELETE FROM MOVIE WHERE ID = ?;";
     }
 
     public void add(Video videoToAdd){

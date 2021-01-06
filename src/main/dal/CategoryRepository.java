@@ -10,7 +10,9 @@ public class CategoryRepository {
 
     private Connection connection;
 
+
     public ObservableList<Category> loadCategories(){
+
 
         return null;
     }
@@ -23,7 +25,7 @@ public class CategoryRepository {
 
     }
 
-    public void update(Category categoryToUpdate){
+    public void update(Category categoryToUpdate, String name, ObservableList videos){
 
     }
 
