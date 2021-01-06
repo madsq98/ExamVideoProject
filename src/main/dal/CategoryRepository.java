@@ -22,7 +22,7 @@ public class CategoryRepository {
 
     }
 
-    public void update(Category categoryToUpdate){
+    public void update(Category categoryToUpdate, String name, ObservableList videos){
 
     }
 
