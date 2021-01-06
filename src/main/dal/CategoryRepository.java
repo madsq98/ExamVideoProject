@@ -14,15 +14,15 @@ public class CategoryRepository {
 
     }
 
-    public void delete(Category){
+    public void delete(Category categoryToDelete){
 
     }
 
-    public void add(Category){
+    public void add(Category categoryToAdd){
 
     }
 
-    public void update(Category){
+    public void update(Category categoryToUpdate){
 
     }
 
@@ -34,11 +34,11 @@ public class CategoryRepository {
 
     }
 
-    public saveLink(Category, Video){
+    public void saveLink(Category, Video){
 
     }
 
-    public deleteLink(Category,Video){
+    public void deleteLink(Category,Video){
 
     }
 }
