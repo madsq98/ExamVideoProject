@@ -13,6 +13,12 @@ public class CategoryManager {
     public CategoryManager() {
         categories = FXCollections.observableArrayList();
         cRepo = new CategoryRepository();
+
+        Category c1 = new Category("Test 1");
+        Category c2 = new Category("Test 2");
+
+        categories.add(c1);
+        categories.add(c2);
     }
 
     public void add(Category c) {

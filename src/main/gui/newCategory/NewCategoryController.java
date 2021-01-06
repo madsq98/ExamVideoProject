@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import main.be.Category;
+import main.be.Video;
 import main.bll.CategoryManager;
 
 public class NewCategoryController {
@@ -21,6 +23,11 @@ public class NewCategoryController {
     }
 
     public void handleSave(ActionEvent actionEvent) {
+        if(!txtCategory.getText().isEmpty()) {
+            Category newCategory = new Category(txtCategory.getText());
+            cMan.add(newCategory);
+            closeWin();
+        }
     }
 
     private void closeWin(){

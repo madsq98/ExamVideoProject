@@ -50,4 +50,9 @@ public class Category {
     public void deleteVideo(Video v) {
         videos.remove(v);
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
