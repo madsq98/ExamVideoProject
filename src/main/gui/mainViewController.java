@@ -32,6 +32,11 @@ public class mainViewController {
 
     }
 
+    public void handleEditCategory(ActionEvent actionEvent) {
+    }
+
+    public void handleEditMovie(ActionEvent actionEvent) {
+    }
 
 /*
         Methods to open Views
@@ -66,9 +71,5 @@ public class mainViewController {
         }
     }
 
-    public void handleEditCategory(ActionEvent actionEvent) {
-    }
 
-    public void handleEditMovie(ActionEvent actionEvent) {
-    }
 }

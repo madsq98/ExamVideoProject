@@ -11,8 +11,8 @@ public class VideoRepository {
     private Collection collection;
 
 
-    public ObservableList<> loadVideos(){
-
+    public ObservableList<Video> loadVideos(){
+        return null;
     }
 
     public void delete(Video videoToDelete){
