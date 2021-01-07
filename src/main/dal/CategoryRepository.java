@@ -1,5 +1,6 @@
 package main.dal;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import javafx.collections.ObservableList;
 import main.be.Category;
 import main.be.Video;
@@ -10,25 +11,22 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class CategoryRepository {
+    private SQLServerDataSource dataSource;
     private Connection connection;
-    public CategoryRepository() throws SQLException {
-        String connectionUrl =
-                "jdbc:sqlserver://mikkelsen.database.windows.net:11.0.7493.4;"
-                        + "database=EXAM_VIDEO;"
-                        + "user=CSe20A_30;"
-                        + "password=mikkelsen;"
-                        + "encrypt=true;"
-                        + "trustServerCertificate=false;"
-                        + "loginTimeout=30;";
-        connection = DriverManager.getConnection(connectionUrl);
 
-        Category c = new Category("test");
-        c.setId(1);
-
+    public CategoryRepository() {
+        dataSource = new SQLServerDataSource();
+        dataSource.setServerName("10.176.111.31");
+        dataSource.setDatabaseName("EXAM_VIDEO");
+        dataSource.setUser("CSe20A_30");
+        dataSource.setPassword("mikkelsen");
         try {
+            connection = dataSource.getConnection();
+            Category c = new Category("test");
+            c.setId(1);
+
             delete(c);
-        }
-        catch(SQLException e) {
+        } catch(SQLException e) {
             e.printStackTrace();
         }
     }
@@ -40,10 +38,14 @@ public class CategoryRepository {
         return null;
     }
 
-    public void delete(Category categoryToDelete) throws SQLException {
-        String sql = "DELETE FROM Category WHERE ID = "+categoryToDelete.getId()+";";
-        PreparedStatement st = connection.prepareStatement(sql);
-        st.executeUpdate();
+    public void delete(Category categoryToDelete) {
+        try {
+            String sql = "DELETE FROM Category WHERE ID = " + categoryToDelete.getId() + ";";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public int add(Category categoryToAdd){
@@ -72,5 +74,5 @@ public class CategoryRepository {
     public void deleteLink(Category c,Video v){
 
     }
-    }
+}
 

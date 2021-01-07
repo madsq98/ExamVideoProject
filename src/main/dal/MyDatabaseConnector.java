@@ -3,17 +3,10 @@ package main.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import sample.be.Playlist;
-import sample.be.Song;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Properties;
 
 public class MyDatabaseConnector {
 
@@ -27,10 +20,10 @@ public class MyDatabaseConnector {
     public MyDatabaseConnector()
     {
         dataSource = new SQLServerDataSource();
-        dataSource.setServerName("10.176.111.31");
-        dataSource.setDatabaseName("MyTunes101");
-        dataSource.setUser("CSe20A_26");
-        dataSource.setPassword("CSe20A_26");
+        dataSource.setServerName("11.0.7493.4");
+        dataSource.setDatabaseName("mikkelsen");
+        dataSource.setUser("CSe20A_30");
+        dataSource.setPassword("mikkelsen");
     }
 
     public Connection getConnection() throws SQLServerException {

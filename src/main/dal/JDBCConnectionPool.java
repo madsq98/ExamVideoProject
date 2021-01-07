@@ -1,7 +1,6 @@
 package main.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import sample.dal.ObjectPool;
 
 import java.io.IOException;
 import java.sql.Connection;
