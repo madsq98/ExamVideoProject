@@ -18,6 +18,7 @@ import main.gui.newCategory.NewCategoryController;
 import main.gui.newVideo.NewVideoController;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class mainViewController {

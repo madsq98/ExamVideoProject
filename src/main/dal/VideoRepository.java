@@ -4,15 +4,16 @@ import javafx.collections.ObservableList;
 import main.be.Video;
 
 import java.sql.Connection;
-import java.time.LocalDate;
-import java.util.Collection;
 
 public class VideoRepository {
 
     private Connection connection;
 
     public VideoRepository() {
+
         //Create JDBC connection to MSSQL database here
+
+
     }
 
     public ObservableList<Video> loadVideos() {

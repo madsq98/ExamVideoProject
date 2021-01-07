@@ -6,11 +6,13 @@ import main.be.Category;
 import main.be.Video;
 import main.dal.CategoryRepository;
 
+import java.sql.SQLException;
+
 public class CategoryManager {
     private ObservableList<Category> categories;
     private CategoryRepository cRepo;
 
-    public CategoryManager() {
+    public CategoryManager() throws SQLException {
         categories = FXCollections.observableArrayList();
         cRepo = new CategoryRepository();
 
