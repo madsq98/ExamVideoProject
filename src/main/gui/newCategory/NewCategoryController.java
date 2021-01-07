@@ -7,12 +7,15 @@ import javafx.stage.Stage;
 import main.be.Category;
 import main.be.Video;
 import main.bll.CategoryManager;
+import main.util.UserError;
 
 public class NewCategoryController {
 
     public TextField txtCategory;
     public Button btnCancelNewCategory;
     private CategoryManager cMan;
+
+    private String errorHeader = "Something went wrong";
 
     public void setManager(CategoryManager cMan) {
         this.cMan = cMan;
@@ -27,6 +30,10 @@ public class NewCategoryController {
             Category newCategory = new Category(txtCategory.getText());
             cMan.add(newCategory);
             closeWin();
+        }
+        else {
+            UserError.showError(errorHeader,"Please provide a title for the category!");
+            return;
         }
     }
 

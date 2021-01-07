@@ -16,6 +16,7 @@ public class EditVideoController {
     public TextField txtVideoFile;
     public Button btnCancelEditVideo;
     private VideoManager vMan;
+    public Video selectedVideo;
 
     public void handleChooseVideoFile(ActionEvent actionEvent) {
         try {
@@ -48,10 +49,9 @@ public class EditVideoController {
             UserError.showError(errorHeader,"Please provide an mp4 file!");
             return;
         }
+        selectedVideo.setName(title);
+        selectedVideo.setPath(filePath);
 
-        Video newVideo = new Video(title, filePath);
-
-        this.vMan.add(newVideo);
         this.closeWin();
     }
 
@@ -62,5 +62,13 @@ public class EditVideoController {
     private void closeWin(){
         Stage stage = (Stage) btnCancelEditVideo.getScene().getWindow();
         stage.close();
+    }
+
+    public void setSelectedVideo(Video selectedVideo) {
+        this.selectedVideo = selectedVideo;
+    }
+
+    public Video getSelectedVideo() {
+        return selectedVideo;
     }
 }
