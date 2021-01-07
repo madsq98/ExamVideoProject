@@ -148,6 +148,7 @@ public class mainViewController {
             Parent mainLayout = loader.load();
             EditCategoryController cvc = loader.getController();
             cvc.setManager(this.cMan);
+            cvc.setSelectedCategory(this.selectedCategory);
             Stage stage = new Stage();
             stage.setScene(new Scene(mainLayout));
             stage.show();
@@ -178,6 +179,7 @@ public class mainViewController {
             Parent mainLayout = loader.load();
             EditVideoController cvc = loader.getController();
             cvc.setManager(this.vMan);
+            cvc.setSelectedVideo(this.selectedVideo);
             Stage stage = new Stage();
             stage.setScene(new Scene(mainLayout));
             stage.show();
