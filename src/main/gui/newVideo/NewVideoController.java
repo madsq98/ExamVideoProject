@@ -36,7 +36,7 @@ public class NewVideoController {
             UserError.showError(errorHeader,"Please provide file path!");
             return;
         }
-        if(!filePath.toLowerCase().endsWith(".mp4")){
+        if(!filePath.toLowerCase().endsWith(".mp4") && !filePath.toLowerCase().endsWith(".mpeg4")){
             UserError.showError(errorHeader,"Please provide an mp4 file!");
             return;
         }
