@@ -5,7 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import main.be.Video;
 import main.bll.VideoManager;
+import main.util.UserError;
+
 import java.io.File;
 
 
@@ -22,6 +25,26 @@ public class NewVideoController {
     }
 
     public void handleSave(ActionEvent actionEvent) {
+        String errorHeader = "Something went wrong!";
+        String title = txtVideoTitle.getText();
+        String filePath = txtVideoFile.getText();
+        if(title.isEmpty()) {
+            UserError.showError(errorHeader,"Please provide a title!");
+            return;
+        }
+        if(filePath.isEmpty()) {
+            UserError.showError(errorHeader,"Please provide file path!");
+            return;
+        }
+        if(!filePath.toLowerCase().endsWith(".mp4")){
+            UserError.showError(errorHeader,"Please provide an mp4 file!");
+            return;
+        }
+
+        Video newVideo = new Video(title, filePath);
+
+        this.vMan.add(newVideo);
+        this.closeWin();
     }
 
     public void setManager(VideoManager vMan) {this.vMan = vMan;}
