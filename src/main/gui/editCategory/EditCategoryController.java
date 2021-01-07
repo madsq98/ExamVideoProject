@@ -14,14 +14,18 @@ public class EditCategoryController {
     public void handleCancel(ActionEvent actionEvent) {closeWin();    }
 
     public void handleSave(ActionEvent actionEvent) {
+
+
     }
 
     public void setManager(CategoryManager cMan) {
         this.cMan = cMan;
     }
 
+
     private void closeWin(){
         Stage stage = (Stage) btnCancelEditCategory.getScene().getWindow();
         stage.close();
     }
+
 }

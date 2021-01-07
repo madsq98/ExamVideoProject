@@ -9,16 +9,18 @@ public class Video {
     private StringProperty name;
     private DoubleProperty rating;
     private StringProperty path;
-    private LocalDate lastView;
+    private ObjectProperty<LocalDate> lastView;
 
     public Video(String name, String path) {
         this.id = new SimpleIntegerProperty();
         this.name = new SimpleStringProperty();
         this.rating = new SimpleDoubleProperty();
         this.path = new SimpleStringProperty();
+        this.lastView = new SimpleObjectProperty<LocalDate>();
         setName(name);
         setPath(path);
         setRating(0.0);
+        setLastView(LocalDate.now());
     }
 
     public void setId(int id) {
@@ -70,10 +72,14 @@ public class Video {
     }
 
     public void setLastView(LocalDate lastView) {
-        this.lastView = lastView;
+        this.lastView.set(lastView);
     }
 
     public LocalDate getLastView() {
+        return lastView.get();
+    }
+
+    public ObjectProperty<LocalDate> getLastViewProperty() {
         return lastView;
     }
 }

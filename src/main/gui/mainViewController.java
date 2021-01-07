@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,6 +23,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class mainViewController {
+    private static final String ERROR_TITLE = "Der opstod en fejl!";
+    private static final String ERROR_HEADER = "Der opstod desværre en fejl!";
 /*
         GUI objects
  */
@@ -60,9 +63,14 @@ public class mainViewController {
         mvName.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getNameProperty());
         mvPath.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getPathProperty());
         mvRating.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getRatingProperty());
+        mvLastSeen.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getLastViewProperty());
 
         lstviewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedCategory = newValue;
+        });
+
+        tblviewMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectedVideo = newValue;
         });
     }
 
@@ -77,21 +85,42 @@ public class mainViewController {
         if(selectedCategory != null) {
             cMan.delete(selectedCategory);
         }
+        else {
+            showError("Du skal vælge en kategori!");
+        }
     }
 
     public void handleEditCategory(ActionEvent actionEvent) {
-        openEditCategory("editCategory/EditCategoryView.fxml");
+        if(selectedCategory != null) {
+            openEditCategory("editCategory/EditCategoryView.fxml");
+        }
+        else {
+            showError("Du skal vælge en kategori!");
+        }
     }
 /*
         Movie buttons
  */
-    public void handleAddMovie(ActionEvent actionEvent) {openNewMovie("newVideo/NewVideoView.fxml");}
-
-    public void handleRemoveMovie(ActionEvent actionEvent) {
-
+    public void handleAddMovie(ActionEvent actionEvent) {
+        openNewMovie("newVideo/NewVideoView.fxml");
     }
 
-    public void handleEditMovie(ActionEvent actionEvent) {openEditMovie("editVideo/EditVideoView.fxml");
+    public void handleRemoveMovie(ActionEvent actionEvent) {
+        if(selectedVideo != null) {
+            vMan.delete(selectedVideo);
+        }
+        else {
+            showError("Du skal vælge en video!");
+        }
+    }
+
+    public void handleEditMovie(ActionEvent actionEvent) {
+        if(selectedVideo != null) {
+            openEditMovie("editVideo/EditVideoView.fxml");
+        }
+        else {
+            showError("Du skal vælge en video!");
+        }
     }
 
 /*
@@ -108,7 +137,7 @@ public class mainViewController {
             stage.setScene(new Scene(mainLayout));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            showError(e.getMessage());
         }
     }
 
@@ -123,7 +152,7 @@ public class mainViewController {
             stage.setScene(new Scene(mainLayout));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            showError(e.getMessage());
         }
     }
 
@@ -138,7 +167,7 @@ public class mainViewController {
             stage.setScene(new Scene(mainLayout));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            showError(e.getMessage());
         }
     }
 
@@ -153,9 +182,15 @@ public class mainViewController {
             stage.setScene(new Scene(mainLayout));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            showError(e.getMessage());
         }
     }
 
-
+    private void showError(String errorText) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(ERROR_TITLE);
+        alert.setHeaderText(ERROR_HEADER);
+        alert.setContentText(errorText);
+        alert.showAndWait();
+    }
 }

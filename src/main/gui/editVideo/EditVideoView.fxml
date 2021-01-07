@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="265.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.editVideo.EditVideoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="190.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.editVideo.EditVideoController">
    <top>
       <VBox prefHeight="29.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -47,51 +47,6 @@
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="25.0" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="65.0" text="Genre:" textAlignment="RIGHT">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtVideoGenre" minHeight="25.0" prefWidth="300.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="25.0" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="65.0" text="Rating:" textAlignment="RIGHT">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtVideoRating" minHeight="25.0" prefWidth="100.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </TextField>
-                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="65.0" text="(out of 10)" textAlignment="RIGHT">
-                     <font>
-                        <Font name="System Italic" size="13.0" />
-                     </font>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </HBox>
             <HBox prefHeight="25.0" prefWidth="600.0">
