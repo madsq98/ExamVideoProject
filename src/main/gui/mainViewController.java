@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.be.Category;
 import main.be.Video;
@@ -245,5 +246,8 @@ public class mainViewController {
         if(selectedCategory != null && selectedVideo != null) {
             selectedCategory.deleteVideo(selectedVideo);
         }
+    }
+
+    public void handleSearch(KeyEvent keyEvent) {
     }
 }
