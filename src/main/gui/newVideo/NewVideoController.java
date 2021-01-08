@@ -25,7 +25,7 @@ public class NewVideoController {
         closeWin();
     }
 
-    public void handleSave(ActionEvent actionEvent) {
+    public void handleSave(ActionEvent actionEvent) throws SQLException {
         String errorHeader = "Something went wrong!";
         String title = txtVideoTitle.getText();
         String filePath = txtVideoFile.getText();
