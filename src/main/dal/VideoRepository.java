@@ -90,7 +90,7 @@ public class VideoRepository {
             Video v = new Video(rs.getString("name"),rs.getString("path"));
             v.setId(id);
             v.setRating(rs.getDouble("rating"));
-            v.setLastView(rs.getDate("lastseen").toLocalDate());
+            v.setLastView(rs.getDate("lastview").toLocalDate());
 
             return v;
         } else {
