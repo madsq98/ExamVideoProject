@@ -51,6 +51,10 @@ public class Category {
         videos.remove(v);
     }
 
+    public ObservableList<Video> getVideos() {
+        return videos;
+    }
+
     @Override
     public String toString() {
         return getName();

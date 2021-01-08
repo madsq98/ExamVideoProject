@@ -108,13 +108,37 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="tblviewMovies" prefHeight="738.0" prefWidth="200.0">
+            <TableView fx:id="tblviewMovies" prefHeight="370.0" prefWidth="200.0">
                <columns>
                   <TableColumn fx:id="mvName" prefWidth="75.0" text="Title" />
                   <TableColumn fx:id="mvPath" prefWidth="75.0" text="Path" />
                   <TableColumn fx:id="mvRating" prefWidth="75.0" text="Score" />
                   <TableColumn fx:id="mvLastSeen" prefWidth="75.0" text="Last viewed" />
-               </columns></TableView>
+               </columns>
+            </TableView>
+            <HBox prefHeight="30.0" prefWidth="774.0">
+               <children>
+                  <Label fx:id="categoryLabel" prefHeight="30.0" text="Category: NONE SELECTED">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <TableView fx:id="tblviewMoviesInCategory" prefHeight="338.0" prefWidth="200.0">
+               <columns>
+                  <TableColumn fx:id="catMvName" prefWidth="75.0" text="Title" />
+                  <TableColumn fx:id="catMvPath" prefWidth="75.0" text="Path" />
+                  <TableColumn fx:id="catMvRating" prefWidth="75.0" text="Score" />
+                  <TableColumn fx:id="catMvLastSeen" prefWidth="75.0" text="Last viewed" />
+               </columns>
+            </TableView>
          </children>
       </VBox>
    </center>
