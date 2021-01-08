@@ -64,13 +64,9 @@ public class mainViewController {
         mvRating.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getRatingProperty());
         mvLastSeen.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getLastViewProperty());
 
-        lstviewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            selectedCategory = newValue;
-        });
+        lstviewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedCategory = newValue);
 
-        tblviewMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            selectedVideo = newValue;
-        });
+        tblviewMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
     }
 
 /*
