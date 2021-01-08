@@ -20,8 +20,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class mainViewController {
-    private static final String ERROR_TITLE = "Der opstod en fejl!";
-    private static final String ERROR_HEADER = "Der opstod desværre en fejl!";
+    private static final String ERROR_TITLE = "An error occurred!";
+    private static final String ERROR_HEADER = "A mistake was made!";
 /*
         GUI objects
  */
@@ -85,7 +85,7 @@ public class mainViewController {
             cMan.delete(selectedCategory);
         }
         else {
-            showError("Du skal vælge en kategori!");
+            showError("You have to choose a category!");
         }
     }
 
@@ -94,7 +94,7 @@ public class mainViewController {
             openEditCategory("editCategory/EditCategoryView.fxml");
         }
         else {
-            showError("Du skal vælge en kategori!");
+            showError("You have to choose a category!");
         }
     }
 /*
@@ -109,7 +109,7 @@ public class mainViewController {
             vMan.delete(selectedVideo);
         }
         else {
-            showError("Du skal vælge en video!");
+            showError("Ypu have to choose a video!");
         }
     }
 
