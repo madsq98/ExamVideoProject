@@ -47,6 +47,9 @@ public class mainViewController {
     private Category selectedCategory;
     private Video selectedVideo;
 
+    public mainViewController() throws SQLException {
+    }
+
     /**
      * Initialize function, method called when GUI is loaded
      */
