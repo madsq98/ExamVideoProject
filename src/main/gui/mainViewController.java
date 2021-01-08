@@ -109,7 +109,7 @@ public class mainViewController {
             vMan.delete(selectedVideo);
         }
         else {
-            showError("Ypu have to choose a video!");
+            showError("You have to choose a video!");
         }
     }
 
@@ -118,7 +118,7 @@ public class mainViewController {
             openEditMovie("editVideo/EditVideoView.fxml");
         }
         else {
-            showError("Du skal vælge en video!");
+            showError("You have to choose a video!");
         }
     }
 
