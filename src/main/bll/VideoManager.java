@@ -6,6 +6,7 @@ import main.be.Video;
 import main.dal.VideoRepository;
 
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 public class VideoManager {
     private ObservableList<Video> videos;
@@ -45,12 +46,42 @@ public class VideoManager {
 
     public ObservableList<Video> search(String filter, ObservableList<Video> videos) {
         ObservableList<Video> returnList = FXCollections.observableArrayList();
+        char[] filterChars = filter.toCharArray();
+        String decimalPattern = "([0-9]*)\\.([0-9]*)";
+
+        StringBuilder sb = new StringBuilder();
+        for (char c: filterChars) {
+            if(Character.isDigit(c)) {
+                sb.append(c);
+                }
+            }
+
         for(Video v : videos) {
             if(v.getName().toLowerCase().contains(filter.toLowerCase())) {
-                returnList.add(v);
+                if(!returnList.contains(v)) {
+                    returnList.add(v);
+                }
             }
-            //TODO search for ratings
-        }
+            if (!sb.toString().isBlank()) {
+                if (Pattern.matches(decimalPattern, filter)) {
+                    double searchValue = Double.parseDouble(filter);
+                    if (searchValue == v.getRating()) {
+                        if(!returnList.contains(v)) {
+                            returnList.add(v);
+                        }
+                    }
+                }
+                for (char c : sb.toString().toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        if (String.valueOf(v.getRating()).contains(String.valueOf(c))) {
+                            if(!returnList.contains(v)) {
+                                returnList.add(v);
+                            }
+                        }
+                    }
+                }
+            }
+            }
 
         return returnList;
     }
