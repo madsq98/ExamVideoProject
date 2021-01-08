@@ -19,7 +19,7 @@ public class CategoryRepository {
         connection = sqlClass.getConnection();
     }
 
-
+    //Loads all the Categories from the database and returns it.
     public ObservableList<Category> loadCategories() throws SQLException {
         ObservableList<Category> categories = FXCollections.observableArrayList();
         String query = "SELECT * FROM Category ORDER BY id";
@@ -32,6 +32,7 @@ public class CategoryRepository {
         }
         return categories;
     }
+    //Deletes a Category in the database table "category".
 
     public void delete(Category categoryToDelete) throws SQLException {
         String sql = "DELETE FROM Category WHERE ID = ?";
@@ -39,7 +40,7 @@ public class CategoryRepository {
         st.setInt(1,categoryToDelete.getId());
         st.executeUpdate();
     }
-
+    //Adds a Category to the Category table
     public int add(Category categoryToAdd) throws SQLException {
         int returnId = -1;
         String name = categoryToAdd.getName();
