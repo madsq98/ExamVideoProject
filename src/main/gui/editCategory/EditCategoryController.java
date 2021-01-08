@@ -8,6 +8,8 @@ import main.be.Category;
 import main.bll.CategoryManager;
 import main.util.UserError;
 
+import java.sql.SQLException;
+
 public class EditCategoryController {
     public TextField txtCategory;
     public Button btnCancelEditCategory;
@@ -15,11 +17,21 @@ public class EditCategoryController {
     public Category selectedCategory;
     private String errorHeader = "Something went wrong!";
 
-    public void handleCancel(ActionEvent actionEvent) {closeWin();    }
+    public void handleCancel(ActionEvent actionEvent) {
+        closeWin();
+    }
 
     public void handleSave(ActionEvent actionEvent) {
         if(!txtCategory.getText().isEmpty()) {
+            Category newCategory = new Category(txtCategory.getText());
+            newCategory.setId(selectedCategory.getId());
             selectedCategory.setName(txtCategory.getText());
+            try {
+                cMan.replace(selectedCategory, newCategory);
+                closeWin();
+            } catch(SQLException e) {
+                UserError.showError(errorHeader,e.getMessage());
+            }
         }
         else {
             UserError.showError(errorHeader,"Please provide a title for the category!");
@@ -38,11 +50,8 @@ public class EditCategoryController {
         stage.close();
     }
 
-    public Category getSelectedCategory() {
-        return selectedCategory;
-    }
-
     public void setSelectedCategory(Category selectedCategory) {
         this.selectedCategory = selectedCategory;
+        txtCategory.setText(selectedCategory.getName());
     }
 }
