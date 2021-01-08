@@ -14,6 +14,7 @@ import main.gui.editCategory.EditCategoryController;
 import main.gui.editVideo.EditVideoController;
 import main.gui.newCategory.NewCategoryController;
 import main.gui.newVideo.NewVideoController;
+import main.gui.rateMovie.RatingController;
 import main.util.UserError;
 
 import java.io.IOException;
@@ -165,6 +166,15 @@ public class mainViewController {
         }
     }
 
+    public void handleRateMovie(ActionEvent actionEvent) {
+        if(selectedVideo != null) {
+            openRateMovie("rateMovie/RatingView.fxml");
+        }
+        else {
+            showError("You have to choose a video!");
+        }
+    }
+
 /*
         Methods to open Views
  */
@@ -247,6 +257,22 @@ public class mainViewController {
         }
     }
 
+    public void openRateMovie(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(fxmlPath));
+            Parent mainLayout = loader.load();
+            RatingController cvc = loader.getController();
+            cvc.setManager(this.vMan);
+            cvc.setSelectedVideo(this.selectedVideo);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(mainLayout));
+            stage.show();
+        } catch (IOException e) {
+            showError(e.getMessage());
+        }
+    }
+
     private void showError(String errorText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(ERROR_TITLE);
@@ -292,6 +318,5 @@ public class mainViewController {
         });
     }
 
-    public void handleRateMovie(ActionEvent actionEvent) {
-    }
+
 }
