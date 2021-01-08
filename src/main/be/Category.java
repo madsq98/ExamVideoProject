@@ -51,6 +51,10 @@ public class Category {
         videos.remove(v);
     }
 
+    public void addVideos(ObservableList<Video> v) {
+        videos.addAll(v);
+    }
+
     public ObservableList<Video> getVideos() {
         return videos;
     }
