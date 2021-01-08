@@ -27,16 +27,18 @@ public class CategoryRepository {
         statement = connection.createStatement();
         resultSet = statement.executeQuery(query);
         while(resultSet.next()) {
-            Category  c = new Category(resultSet.getString("name"));
+            Category c = new Category(resultSet.getString("name"));
+            c.setId(resultSet.getInt("ID"));
             categories.add(c);
         }
         return categories;
     }
 
     public void delete(Category categoryToDelete) throws SQLException {
-        String sql = "DELETE FROM Category WHERE ID = ?;";
+        String sql = "DELETE FROM Category WHERE ID = ?";
         PreparedStatement st = connection.prepareStatement(sql);
         st.setInt(1,categoryToDelete.getId());
+        System.out.println(categoryToDelete.getId());
         st.executeUpdate();
     }
 
