@@ -96,14 +96,24 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Button>
+                  <Button fx:id="btnEditMovie1" layoutX="144.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleEditMovie" prefHeight="26.0" prefWidth="100.0" text="add to category">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnEditMovie11" layoutX="189.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleEditMovie" prefHeight="26.0" prefWidth="140.0" text="remove from category">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
             <TableView fx:id="tblviewMovies" prefHeight="738.0" prefWidth="200.0">
                <columns>
-                  <TableColumn fx:id="mvName" prefWidth="75.0" text="Navn" />
-                  <TableColumn fx:id="mvPath" prefWidth="75.0" text="Sti" />
+                  <TableColumn fx:id="mvName" prefWidth="75.0" text="Title" />
+                  <TableColumn fx:id="mvPath" prefWidth="75.0" text="Path" />
                   <TableColumn fx:id="mvRating" prefWidth="75.0" text="Score" />
-                  <TableColumn fx:id="mvLastSeen" prefWidth="75.0" text="Sidst set" />
+                  <TableColumn fx:id="mvLastSeen" prefWidth="75.0" text="Last viewed" />
                </columns></TableView>
          </children>
       </VBox>
