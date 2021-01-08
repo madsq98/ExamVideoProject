@@ -109,6 +109,7 @@ public class mainViewController {
 /*
         Category buttons
  */
+
     public void handleAddCategory(ActionEvent actionEvent) {
         openNewCategory("newCategory/NewCategoryView.fxml");
     }
@@ -166,6 +167,11 @@ public class mainViewController {
 /*
         Methods to open Views
  */
+
+    /**
+     * Opens the new category window
+     * @param fxmlPath file path to FXML document
+     */
     public void openNewCategory(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -181,6 +187,10 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Opens the edit category window
+     * @param fxmlPath file path to FXML document
+     */
     public void openEditCategory(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -197,6 +207,10 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Opens the new movie window
+     * @param fxmlPath file path to FXML document
+     */
     public void openNewMovie(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -212,6 +226,10 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Opens the edit movie window
+     * @param fxmlPath file path to FXML document
+     */
     public void openEditMovie(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader();
