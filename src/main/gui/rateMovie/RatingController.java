@@ -23,11 +23,11 @@ public class RatingController {
     public void initialize() {
         sliderRating.setMin(0.0);
         sliderRating.setMax(10.0);
-        sliderRating.setMajorTickUnit(50);
-        sliderRating.setMinorTickCount(1);
+        sliderRating.setMajorTickUnit(5.0);
         sliderRating.setBlockIncrement(0.5);
         sliderRating.setShowTickLabels(true);
         sliderRating.setShowTickMarks(true);
+        sliderRating.setSnapToTicks(true);
         sliderRating.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
@@ -58,5 +58,6 @@ public class RatingController {
     }
 
     public void handleRatingtxtInput(KeyEvent keyEvent) {
+        sliderRating.setValue(Double.parseDouble(txtFieldRating.getText()));
     }
 }
