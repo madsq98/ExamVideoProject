@@ -5,11 +5,13 @@ import javafx.collections.ObservableList;
 import main.be.Video;
 import main.dal.VideoRepository;
 
+import java.sql.SQLException;
+
 public class VideoManager {
     private ObservableList<Video> videos;
     private VideoRepository vRepo;
 
-    public VideoManager() {
+    public VideoManager() throws SQLException {
         videos = FXCollections.observableArrayList();
         vRepo = new VideoRepository();
     }

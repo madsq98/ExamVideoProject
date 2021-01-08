@@ -12,7 +12,7 @@ public class CategoryManager {
     private ObservableList<Category> categories;
     private CategoryRepository cRepo;
 
-    public CategoryManager(){
+    public CategoryManager() throws SQLException {
         categories = FXCollections.observableArrayList();
         cRepo = new CategoryRepository();
     }
