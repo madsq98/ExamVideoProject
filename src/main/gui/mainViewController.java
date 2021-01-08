@@ -43,6 +43,7 @@ public class mainViewController {
 
     public Button btnAddMovie;
     public Button btnRemoveMovie;
+    public TextField txtFieldSearch;
 
     /*
                 Setting managers
@@ -103,7 +104,10 @@ public class mainViewController {
 
         tblviewMoviesInCategory.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedVideo = newValue;
+            
         });
+
+        filterListener();
     }
 
 /*
@@ -266,6 +270,20 @@ public class mainViewController {
         }
     }
 
-    public void handleSearch(KeyEvent keyEvent) {
+    private void filterListener() {
+        this.txtFieldSearch.textProperty().addListener((observable,oldValue,newValue) -> {
+            if(!newValue.isEmpty() && !newValue.isBlank()) {
+                tblviewMovies.setItems(vMan.search(txtFieldSearch.getText(),vMan.getAllVideos()));
+                if(selectedCategory != null) {
+                    tblviewMovies.setItems(vMan.search(txtFieldSearch.getText(),selectedCategory.getVideos()));
+                }
+            }
+            else {
+                tblviewMovies.setItems(vMan.getAllVideos());
+                if(selectedCategory != null) {
+                    tblviewMovies.setItems(selectedCategory.getVideos());
+                }
+            }
+        });
     }
 }

@@ -102,7 +102,7 @@
                         <Insets bottom="2.0" left="400.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="txtFieldSearch" onKeyTyped="#handleSearch" prefHeight="26.0">
+                  <TextField fx:id="txtFieldSearch" prefHeight="26.0">
                      <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>

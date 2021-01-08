@@ -80,4 +80,21 @@ public class VideoRepository {
 
         st.executeUpdate();
     }
+
+    public Video getMovieFromId(int id) throws SQLException {
+        String query = "SELECT * FROM MOVIE WHERE ID = ?;";
+        PreparedStatement st = connection.prepareStatement(query);
+        st.setInt(1,id);
+        ResultSet rs = st.executeQuery();
+        if(rs.next()) {
+            Video v = new Video(rs.getString("name"),rs.getString("path"));
+            v.setId(id);
+            v.setRating(rs.getDouble("rating"));
+            v.setLastView(rs.getDate("lastseen").toLocalDate());
+
+            return v;
+        } else {
+            return null;
+        }
+    }
 }

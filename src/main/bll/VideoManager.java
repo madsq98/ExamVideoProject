@@ -38,11 +38,20 @@ public class VideoManager {
         }
     }
 
-    public ObservableList<Video> search(String filter, ObservableList<Video> search) {
-        return search;
-    }
 
     public ObservableList<Video> getAllVideos() {
         return videos;
+    }
+
+    public ObservableList<Video> search(String filter, ObservableList<Video> videos) {
+        ObservableList<Video> returnList = FXCollections.observableArrayList();
+        for(Video v : videos) {
+            if(v.getName().toLowerCase().contains(filter.toLowerCase())) {
+                returnList.add(v);
+            }
+            //TODO search for ratings
+        }
+
+        return returnList;
     }
 }
