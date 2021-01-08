@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import main.be.Category;
 import main.be.Video;
@@ -34,10 +31,12 @@ public class mainViewController {
     public TableColumn<Video,String> mvPath;
     public TableColumn<Video,Number> mvRating;
     public TableColumn<Video,LocalDate> mvLastSeen;
+    public Button btnAddMovie;
+    public Button btnRemoveMovie;
 
-/*
-            Setting managers
-*/
+    /*
+                Setting managers
+    */
     private CategoryManager cMan = new CategoryManager();
     private VideoManager vMan = new VideoManager();
 
@@ -194,5 +193,17 @@ public class mainViewController {
         alert.setHeaderText(ERROR_HEADER);
         alert.setContentText(errorText);
         alert.showAndWait();
+    }
+
+    public void handleAddToCat(ActionEvent actionEvent) {
+        if(selectedCategory != null && selectedVideo != null) {
+            selectedCategory.addVideo(selectedVideo);
+        }
+    }
+
+    public void handleRemoveFromCat(ActionEvent actionEvent) {
+        if(selectedCategory != null && selectedVideo != null) {
+            selectedCategory.deleteVideo(selectedVideo);
+        }
     }
 }
