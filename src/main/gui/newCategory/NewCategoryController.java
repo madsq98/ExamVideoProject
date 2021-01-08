@@ -9,6 +9,8 @@ import main.be.Video;
 import main.bll.CategoryManager;
 import main.util.UserError;
 
+import java.sql.SQLException;
+
 public class NewCategoryController {
 
     public TextField txtCategory;
@@ -28,8 +30,12 @@ public class NewCategoryController {
     public void handleSave(ActionEvent actionEvent) {
         if(!txtCategory.getText().isEmpty()) {
             Category newCategory = new Category(txtCategory.getText());
-            cMan.add(newCategory);
-            closeWin();
+            try {
+                cMan.add(newCategory);
+                closeWin();
+            } catch(SQLException e) {
+                UserError.showError(errorHeader,e.getMessage());
+            }
         }
         else {
             UserError.showError(errorHeader,"Please provide a title for the category!");

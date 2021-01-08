@@ -10,6 +10,7 @@ import main.bll.VideoManager;
 import main.util.UserError;
 
 import java.io.File;
+import java.sql.SQLException;
 
 
 public class NewVideoController {
@@ -43,8 +44,12 @@ public class NewVideoController {
 
         Video newVideo = new Video(title, filePath);
 
-        this.vMan.add(newVideo);
-        this.closeWin();
+        try {
+            this.vMan.add(newVideo);
+            this.closeWin();
+        } catch(SQLException e) {
+            UserError.showError(errorHeader,e.getMessage());
+        }
     }
 
     public void setManager(VideoManager vMan) {this.vMan = vMan;}
