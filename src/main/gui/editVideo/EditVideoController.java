@@ -75,5 +75,7 @@ public class EditVideoController {
 
     public void setSelectedVideo(Video selectedVideo) {
         this.selectedVideo = selectedVideo;
+        txtVideoTitle.setText(selectedVideo.getName());
+        txtVideoTitle.setText(selectedVideo.getPath());
     }
 }
