@@ -7,11 +7,14 @@ import main.be.Category;
 import main.be.Video;
 
 import java.sql.*;
-import java.time.LocalDate;
 
 public class CategoryRepository {
     private SqlConnectionHandler sqlClass;
     private Connection connection;
+    private PreparedStatement preparedStatement = null;
+    private Connection connect = null;
+    private Statement statement = null;
+    private ResultSet resultSet = null;
 
     public CategoryRepository() throws SQLException {
         sqlClass = new SqlConnectionHandler();
@@ -19,25 +22,21 @@ public class CategoryRepository {
     }
 
 
-    public ObservableList<Category> loadCategories() throws SQLException {
-        String query = "SELECT * FROM Category";
-        Statement st = connection.createStatement();
-        ResultSet rs = st.executeQuery(query);
-
-        ObservableList<Category> returnList = FXCollections.observableArrayList();
-
-        while(rs.next()) {
-            int id = rs.getInt("ID");
-            String name = rs.getString("name");
-
-            Category c = new Category(name);
-            c.setId(id);
-
-            returnList.add(c);
+    public ObservableList<Category> loadCategories(){
+        try{
+            ObservableList<Category> categories = FXCollections.observableArrayList();
+            String query = "SELECT * FROM Category ORDER BY id";
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                Category  c = new Category(resultSet.getString("name"));
+                categories.add(c);
+            }
+            return null;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
-
-        return returnList;
-
     }
 
     public void delete(Category categoryToDelete) {
@@ -50,74 +49,49 @@ public class CategoryRepository {
         }
     }
 
-    public int add(Category categoryToAdd) throws SQLException {
-        String query = "INSERT INTO CATEGORY (name) VALUES (?);";
-        PreparedStatement st = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-
-        st.setString(1, categoryToAdd.getName());
-
-        int affectedRows = st.executeUpdate();
-
-        ResultSet keys = st.getGeneratedKeys();
-
-        if(keys.next()) {
-            return keys.getInt(1);
-        } else {
-            return 0;
-        }
-    }
-
-    public void update(Category categoryToUpdate) throws SQLException {
-        String query = "UPDATE CATEGORY SET name = ? WHERE ID = ?;";
-        PreparedStatement st = connection.prepareStatement(query);
-
-        st.setString(1, categoryToUpdate.getName());
-
-
-        st.executeUpdate();
-    }
-
-
-
-
-    public void saveAllLinks(Category c){
-        try {
-            String sql = "";
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.executeUpdate();
-        } catch (SQLException e) {
+    public int add(Category categoryToAdd){
+        int returnId = -1;
+        try{
+            String name = categoryToAdd.getName();
+            String query ="INSERT INTO Category SET name ='"+name+"'";
+            preparedStatement = connect.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.executeUpdate();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if(generatedKeys.next()){
+                returnId = generatedKeys.getInt(1);
+            }
+        }catch (Exception e){
             e.printStackTrace();
         }
+        return returnId;
+    }
+
+    public void update(Category categoryToUpdate){
+        try {
+            String name = categoryToUpdate.getName();
+            int id = categoryToUpdate.getId();
+            String query = "UPDATE Category SET name = '"+name+"' WHERE id = '"+id+"'";
+            preparedStatement = connect.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveAllLinks(Category c){
+
     }
 
     public void ObservableList(Category c){
-        try {
-            String sql = "";
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void saveLink(Category c, Video v){
-        try {
-            String sql = "";
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void deleteLink(Category c,Video v){
-        try {
-            String sql = "UPDATE Movie SET [path] = REPLACE(path ?) WHERE path =?";;
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 }
 

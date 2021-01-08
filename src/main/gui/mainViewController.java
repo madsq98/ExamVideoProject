@@ -37,8 +37,8 @@ public class mainViewController {
     /*
                 Setting managers
     */
-    private CategoryManager cMan = new CategoryManager();
-    private VideoManager vMan = new VideoManager();
+    private CategoryManager cMan;
+    private VideoManager vMan;
 
 /*
         Controls regarding functionality
@@ -53,6 +53,13 @@ public class mainViewController {
      * Initialize function, method called when GUI is loaded
      */
     public void initialize() {
+        try {
+            vMan = new VideoManager();
+            cMan = new CategoryManager();
+        } catch(SQLException e) {
+            showError(e.getMessage());
+        }
+
         lstviewCategories.setItems(cMan.getCategories());
 
         double width = 750.0;
@@ -81,7 +88,11 @@ public class mainViewController {
 
     public void handleRemoveCategory(ActionEvent actionEvent) {
         if(selectedCategory != null) {
-            cMan.delete(selectedCategory);
+            try {
+                cMan.delete(selectedCategory);
+            } catch(SQLException e) {
+                showError(e.getMessage());
+            }
         }
         else {
             showError("You have to choose a category!");
@@ -105,7 +116,11 @@ public class mainViewController {
 
     public void handleRemoveMovie(ActionEvent actionEvent) {
         if(selectedVideo != null) {
-            vMan.delete(selectedVideo);
+            try {
+                vMan.delete(selectedVideo);
+            } catch(SQLException e) {
+                showError(e.getMessage());
+            }
         }
         else {
             showError("You have to choose a video!");

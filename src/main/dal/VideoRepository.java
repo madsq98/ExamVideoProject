@@ -21,7 +21,7 @@ public class VideoRepository {
         String query = "SELECT * FROM MOVIE";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
-        
+
         ObservableList<Video> returnList = FXCollections.observableArrayList();
 
         while(rs.next()) {
