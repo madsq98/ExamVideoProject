@@ -85,6 +85,7 @@ public class CategoryRepository {
 
     public void saveLink(Category c, Video v) throws SQLException{
         String query = "INSERT INTO CatMovie (CategoryId,MovieId) VALUES(?,?);";
+        System.out.println(c.getId());
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1,c.getId());
         preparedStatement.setInt(2,v.getId());

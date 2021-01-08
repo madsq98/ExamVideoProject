@@ -15,6 +15,7 @@ import main.gui.editCategory.EditCategoryController;
 import main.gui.editVideo.EditVideoController;
 import main.gui.newCategory.NewCategoryController;
 import main.gui.newVideo.NewVideoController;
+import main.util.UserError;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -260,13 +261,21 @@ public class mainViewController {
 
     public void handleAddToCat(ActionEvent actionEvent) {
         if(selectedCategory != null && selectedVideo != null) {
-            selectedCategory.addVideo(selectedVideo);
+            try {
+                cMan.saveLink(selectedCategory, selectedVideo);
+            } catch(SQLException e) {
+                UserError.showError(ERROR_HEADER,e.getMessage());
+            }
         }
     }
 
     public void handleRemoveFromCat(ActionEvent actionEvent) {
         if(selectedCategory != null && selectedVideo != null) {
-            selectedCategory.deleteVideo(selectedVideo);
+            try {
+                cMan.deleteLink(selectedCategory,selectedVideo);
+            } catch(SQLException e) {
+                UserError.showError(ERROR_HEADER,e.getMessage());
+            }
         }
     }
 
