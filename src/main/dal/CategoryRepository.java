@@ -64,16 +64,20 @@ public class CategoryRepository {
         preparedStatement.executeUpdate();
     }
 
-    public void saveAllLinks(Category c){
-
+    public void saveLink(Category c, Video v) throws SQLException{
+            String query = "INSERT INTO CatMovie (CategoryId,MovieId) VALUES(?,?);";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,c.getId());
+            preparedStatement.setInt(2,v.getId());
+            preparedStatement.executeUpdate();
     }
 
-    public void saveLink(Category c, Video v){
-
-    }
-
-    public void deleteLink(Category c,Video v){
-
+    public void deleteLink(Category c,Video v) throws SQLException{
+        String query = "INSERT INTO CatMovie (CategoryId,MovieId) VALUES(?,?);";
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1,c.getId());
+        preparedStatement.setInt(2,v.getId());
+        preparedStatement.executeUpdate();
     }
 }
 
