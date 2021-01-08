@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -96,25 +97,59 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnAddToCat" layoutX="144.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleAddToCat" prefHeight="26.0" prefWidth="100.0" text="add to category">
+                  <Label prefHeight="26.0" text="Search:">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="400.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtFieldSearch" onKeyTyped="#handleSearch" prefHeight="26.0">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <TableView fx:id="tblviewMovies" prefHeight="370.0" prefWidth="200.0">
+               <columns>
+                  <TableColumn fx:id="mvName" prefWidth="75.0" text="Title" />
+                  <TableColumn fx:id="mvPath" prefWidth="75.0" text="Path" />
+                  <TableColumn fx:id="mvRating" prefWidth="75.0" text="Score" />
+                  <TableColumn fx:id="mvLastSeen" prefWidth="75.0" text="Last viewed" />
+               </columns>
+            </TableView>
+            <HBox prefHeight="30.0" prefWidth="774.0">
+               <children>
+                  <Label fx:id="categoryLabel" prefHeight="30.0" text="Category: NONE SELECTED">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button fx:id="btnAddToCat" mnemonicParsing="false" onAction="#handleAddToCat" prefHeight="26.0" prefWidth="26.0" text="+">
                      <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnReomveFromCat" layoutX="189.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleRemoveFromCat" prefHeight="26.0" prefWidth="140.0" text="remove from category">
+                  <Button fx:id="btnReomveFromCat" mnemonicParsing="false" onAction="#handleRemoveFromCat" prefHeight="26.0" prefWidth="26.0" text="-">
                      <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="tblviewMovies" prefHeight="738.0" prefWidth="200.0">
+            <TableView fx:id="tblviewMoviesInCategory" prefHeight="338.0" prefWidth="200.0">
                <columns>
-                  <TableColumn fx:id="mvName" prefWidth="75.0" text="Title" />
-                  <TableColumn fx:id="mvPath" prefWidth="75.0" text="Path" />
-                  <TableColumn fx:id="mvRating" prefWidth="75.0" text="Score" />
-                  <TableColumn fx:id="mvLastSeen" prefWidth="75.0" text="Last viewed" />
-               </columns></TableView>
+                  <TableColumn fx:id="catMvName" prefWidth="75.0" text="Title" />
+                  <TableColumn fx:id="catMvPath" prefWidth="75.0" text="Path" />
+                  <TableColumn fx:id="catMvRating" prefWidth="75.0" text="Score" />
+                  <TableColumn fx:id="catMvLastSeen" prefWidth="75.0" text="Last viewed" />
+               </columns>
+            </TableView>
          </children>
       </VBox>
    </center>

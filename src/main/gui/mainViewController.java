@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.be.Category;
 import main.be.Video;
@@ -26,11 +27,20 @@ public class mainViewController {
         GUI objects
  */
     public ListView<Category> lstviewCategories;
+
     public TableView<Video> tblviewMovies;
     public TableColumn<Video,String> mvName;
     public TableColumn<Video,String> mvPath;
     public TableColumn<Video,Number> mvRating;
     public TableColumn<Video,LocalDate> mvLastSeen;
+
+    public TableView<Video> tblviewMoviesInCategory;
+    public TableColumn<Video,String> catMvName;
+    public TableColumn<Video,String> catMvPath;
+    public TableColumn<Video,Number> catMvRating;
+    public TableColumn<Video,LocalDate> catMvLastSeen;
+    public Label categoryLabel;
+
     public Button btnAddMovie;
     public Button btnRemoveMovie;
 
@@ -67,6 +77,10 @@ public class mainViewController {
         mvPath.setPrefWidth(width * 0.25);
         mvRating.setPrefWidth(width * 0.25);
         mvLastSeen.setPrefWidth(width * 0.25);
+        catMvName.setPrefWidth(width * 0.25);
+        catMvPath.setPrefWidth(width * 0.25);
+        catMvRating.setPrefWidth(width * 0.25);
+        catMvLastSeen.setPrefWidth(width * 0.25);
 
         tblviewMovies.setItems(vMan.getAllVideos());
         mvName.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getNameProperty());
@@ -74,9 +88,22 @@ public class mainViewController {
         mvRating.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getRatingProperty());
         mvLastSeen.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getLastViewProperty());
 
-        lstviewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedCategory = newValue);
+        catMvName.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getNameProperty());
+        catMvPath.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getPathProperty());
+        catMvRating.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getRatingProperty());
+        catMvLastSeen.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getLastViewProperty());
+
+        lstviewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectedCategory = newValue;
+            tblviewMoviesInCategory.setItems(selectedCategory.getVideos());
+            categoryLabel.setText("Category: " + selectedCategory.getName());
+        });
 
         tblviewMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
+
+        tblviewMoviesInCategory.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectedVideo = newValue;
+        });
     }
 
 /*
@@ -219,5 +246,8 @@ public class mainViewController {
         if(selectedCategory != null && selectedVideo != null) {
             selectedCategory.deleteVideo(selectedVideo);
         }
+    }
+
+    public void handleSearch(KeyEvent keyEvent) {
     }
 }
