@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import main.be.Category;
 import main.be.Video;
@@ -23,8 +20,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class mainViewController {
-    private static final String ERROR_TITLE = "Der opstod en fejl!";
-    private static final String ERROR_HEADER = "Der opstod desværre en fejl!";
+    private static final String ERROR_TITLE = "An error occurred!";
+    private static final String ERROR_HEADER = "A mistake was made!";
 /*
         GUI objects
  */
@@ -34,10 +31,12 @@ public class mainViewController {
     public TableColumn<Video,String> mvPath;
     public TableColumn<Video,Number> mvRating;
     public TableColumn<Video,LocalDate> mvLastSeen;
+    public Button btnAddMovie;
+    public Button btnRemoveMovie;
 
-/*
-            Setting managers
-*/
+    /*
+                Setting managers
+    */
     private CategoryManager cMan = new CategoryManager();
     private VideoManager vMan = new VideoManager();
 
@@ -86,7 +85,7 @@ public class mainViewController {
             cMan.delete(selectedCategory);
         }
         else {
-            showError("Du skal vælge en kategori!");
+            showError("You have to choose a category!");
         }
     }
 
@@ -95,7 +94,7 @@ public class mainViewController {
             openEditCategory("editCategory/EditCategoryView.fxml");
         }
         else {
-            showError("Du skal vælge en kategori!");
+            showError("You have to choose a category!");
         }
     }
 /*
@@ -110,7 +109,7 @@ public class mainViewController {
             vMan.delete(selectedVideo);
         }
         else {
-            showError("Du skal vælge en video!");
+            showError("You have to choose a video!");
         }
     }
 
@@ -119,7 +118,7 @@ public class mainViewController {
             openEditMovie("editVideo/EditVideoView.fxml");
         }
         else {
-            showError("Du skal vælge en video!");
+            showError("You have to choose a video!");
         }
     }
 
@@ -194,5 +193,17 @@ public class mainViewController {
         alert.setHeaderText(ERROR_HEADER);
         alert.setContentText(errorText);
         alert.showAndWait();
+    }
+
+    public void handleAddToCat(ActionEvent actionEvent) {
+        if(selectedCategory != null && selectedVideo != null) {
+            selectedCategory.addVideo(selectedVideo);
+        }
+    }
+
+    public void handleRemoveFromCat(ActionEvent actionEvent) {
+        if(selectedCategory != null && selectedVideo != null) {
+            selectedCategory.deleteVideo(selectedVideo);
+        }
     }
 }
