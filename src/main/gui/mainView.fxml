@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -96,6 +97,16 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Button>
+                  <Label prefHeight="26.0" text="Search:">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="400.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtFieldSearch" onKeyTyped="#handleSearch" prefHeight="26.0">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </HBox.margin>
+                  </TextField>
                </children>
             </HBox>
             <TableView fx:id="tblviewMovies" prefHeight="370.0" prefWidth="200.0">
