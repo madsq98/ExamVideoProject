@@ -71,6 +71,7 @@ public class VideoManager {
                         }
                     }
                 }
+                if(!Pattern.matches(decimalPattern,filter))
                 for (char c : sb.toString().toCharArray()) {
                     if (Character.isDigit(c)) {
                         if (String.valueOf(v.getRating()).contains(String.valueOf(c))) {

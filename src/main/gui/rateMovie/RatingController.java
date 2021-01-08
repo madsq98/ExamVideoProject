@@ -10,6 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.be.Video;
 import main.bll.VideoManager;
+import main.util.UserError;
+
+import java.sql.SQLException;
 
 public class RatingController {
     public Button btnCancelRating;
@@ -42,6 +45,19 @@ public class RatingController {
     }
 
     public void handleSaveRating(ActionEvent actionEvent) {
+        Video newVideo = new Video(selectedVideo.getName(), selectedVideo.getPath());
+        newVideo.setId(selectedVideo.getId());
+        newVideo.setRating(sliderRating.getValue());
+        newVideo.setLastView(selectedVideo.getLastView());
+
+        try {
+            vMan.replace(selectedVideo, newVideo);
+            closeWin();
+        } catch(SQLException e) {
+            String errorHeader = "Something went wrong!";
+            UserError.showError(errorHeader,e.getMessage());
+        }
+
         selectedVideo.setRating(sliderRating.getValue());
         closeWin();
 
