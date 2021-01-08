@@ -1,6 +1,5 @@
 package main.dal;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.be.Category;
