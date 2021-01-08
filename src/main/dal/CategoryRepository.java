@@ -34,16 +34,18 @@ public class CategoryRepository {
     }
 
     public void delete(Category categoryToDelete) throws SQLException {
-        String sql = "DELETE FROM Category WHERE ID = " + categoryToDelete.getId() + ";";
+        String sql = "DELETE FROM Category WHERE ID = ?;";
         PreparedStatement st = connection.prepareStatement(sql);
+        st.setInt(1,categoryToDelete.getId());
         st.executeUpdate();
     }
 
     public int add(Category categoryToAdd) throws SQLException {
         int returnId = -1;
         String name = categoryToAdd.getName();
-        String query ="INSERT INTO Category SET name ='"+name+"'";
+        String query ="INSERT INTO Category (name) VALUES (?);";
         preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setString(1,categoryToAdd.getName());
         preparedStatement.executeUpdate();
         ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
         if(generatedKeys.next()){
@@ -55,8 +57,10 @@ public class CategoryRepository {
     public void update(Category categoryToUpdate) throws SQLException {
         String name = categoryToUpdate.getName();
         int id = categoryToUpdate.getId();
-        String query = "UPDATE Category SET name = '"+name+"' WHERE id = '"+id+"'";
+        String query = "UPDATE Category SET name = ? WHERE id = ?";
         preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1,categoryToUpdate.getName());
+        preparedStatement.setInt(2,categoryToUpdate.getId());
         preparedStatement.executeUpdate();
     }
 
