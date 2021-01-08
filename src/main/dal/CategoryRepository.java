@@ -11,24 +11,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class CategoryRepository {
-    private SQLServerDataSource dataSource;
+    private SqlConnectionHandler sqlClass;
     private Connection connection;
 
-    public CategoryRepository() {
-        dataSource = new SQLServerDataSource();
-        dataSource.setServerName("10.176.111.31");
-        dataSource.setDatabaseName("EXAM_VIDEO");
-        dataSource.setUser("CSe20A_30");
-        dataSource.setPassword("mikkelsen");
-        try {
-            connection = dataSource.getConnection();
-            Category c = new Category("test");
-            c.setId(1);
-
-            delete(c);
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
+    public CategoryRepository() throws SQLException {
+        sqlClass = new SqlConnectionHandler();
+        connection = sqlClass.getConnection();
     }
 
 
