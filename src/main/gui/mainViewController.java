@@ -102,10 +102,7 @@ public class mainViewController {
 
         tblviewMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
 
-        tblviewMoviesInCategory.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            selectedVideo = newValue;
-            
-        });
+        tblviewMoviesInCategory.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
 
         filterListener();
     }
@@ -293,5 +290,8 @@ public class mainViewController {
                 }
             }
         });
+    }
+
+    public void handleRateMovie(ActionEvent actionEvent) {
     }
 }

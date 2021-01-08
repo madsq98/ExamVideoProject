@@ -97,9 +97,14 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Button>
+                  <Button fx:id="btnRateMovie" mnemonicParsing="false" onAction="#handleRateMovie" prefHeight="26.0" prefWidth="40.0" text="rate">
+                     <HBox.margin>
+                        <Insets top="2.0" />
+                     </HBox.margin>
+                  </Button>
                   <Label prefHeight="26.0" text="Search:">
                      <HBox.margin>
-                        <Insets bottom="2.0" left="400.0" right="2.0" top="2.0" />
+                        <Insets bottom="2.0" left="350.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Label>
                   <TextField fx:id="txtFieldSearch" prefHeight="26.0">
