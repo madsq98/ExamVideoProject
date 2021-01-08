@@ -12,12 +12,6 @@ public class VideoManager {
     public VideoManager() {
         videos = FXCollections.observableArrayList();
         vRepo = new VideoRepository();
-
-        Video v1 = new Video("Terminator","C:/film/Terminator.mp4");
-        Video v2 = new Video("Sigurds Bjørnetime","C:/film/Sigurd.mp4");
-
-        videos.add(v1);
-        videos.add(v2);
     }
 
     public void add(Video v) {
