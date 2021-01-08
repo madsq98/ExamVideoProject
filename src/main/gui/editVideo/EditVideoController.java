@@ -10,6 +10,7 @@ import main.bll.VideoManager;
 import main.util.UserError;
 
 import java.io.File;
+import java.sql.SQLException;
 
 public class EditVideoController {
     public TextField txtVideoTitle;
@@ -49,10 +50,18 @@ public class EditVideoController {
             UserError.showError(errorHeader,"Please provide an mp4 file!");
             return;
         }
-        selectedVideo.setName(title);
-        selectedVideo.setPath(filePath);
 
-        this.closeWin();
+        Video newVideo = new Video(title,filePath);
+        newVideo.setId(selectedVideo.getId());
+        newVideo.setRating(selectedVideo.getRating());
+        newVideo.setLastView(selectedVideo.getLastView());
+
+        try {
+            vMan.replace(selectedVideo, newVideo);
+            closeWin();
+        } catch(SQLException e) {
+            UserError.showError(errorHeader,e.getMessage());
+        }
     }
 
     public void setManager(VideoManager vMan) {
@@ -66,9 +75,5 @@ public class EditVideoController {
 
     public void setSelectedVideo(Video selectedVideo) {
         this.selectedVideo = selectedVideo;
-    }
-
-    public Video getSelectedVideo() {
-        return selectedVideo;
     }
 }
