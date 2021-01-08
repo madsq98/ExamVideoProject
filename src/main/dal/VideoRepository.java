@@ -76,6 +76,7 @@ public class VideoRepository {
         st.setDouble(2, videoToUpdate.getRating());
         st.setString(3, videoToUpdate.getPath());
         st.setDate(4, java.sql.Date.valueOf(videoToUpdate.getLastView()));
+        st.setInt(5,videoToUpdate.getId());
 
         st.executeUpdate();
     }
