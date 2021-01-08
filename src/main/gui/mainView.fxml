@@ -96,12 +96,12 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnEditMovie1" layoutX="144.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleEditMovie" prefHeight="26.0" prefWidth="100.0" text="add to category">
+                  <Button fx:id="btnAddToCat" layoutX="144.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleAddToCat" prefHeight="26.0" prefWidth="100.0" text="add to category">
                      <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnEditMovie11" layoutX="189.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleEditMovie" prefHeight="26.0" prefWidth="140.0" text="remove from category">
+                  <Button fx:id="btnReomveFromCat" layoutX="189.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleRemoveFromCat" prefHeight="26.0" prefWidth="140.0" text="remove from category">
                      <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </HBox.margin>
