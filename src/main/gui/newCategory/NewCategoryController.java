@@ -27,7 +27,7 @@ public class NewCategoryController {
         closeWin();
     }
 
-    public void handleSave(ActionEvent actionEvent) {
+    public void handleSave(ActionEvent actionEvent) throws SQLException {
         if(!txtCategory.getText().isEmpty()) {
             Category newCategory = new Category(txtCategory.getText());
             try {
