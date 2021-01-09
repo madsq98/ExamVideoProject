@@ -57,7 +57,7 @@ public class VideoManager {
             }
 
         for(Video v : videos) {
-            if(v.getName().toLowerCase().contains(filter.toLowerCase())) {
+            if(v.getName().toLowerCase().contains(filter.toLowerCase()) || String.valueOf(v.getRating()).contains(filter.toLowerCase())) {
                 if(!returnList.contains(v)) {
                     returnList.add(v);
                 }
