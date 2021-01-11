@@ -3,10 +3,16 @@ package main.gui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import main.be.Category;
 import main.be.Video;
@@ -19,6 +25,8 @@ import main.gui.newVideo.NewVideoController;
 import main.gui.rateMovie.RatingController;
 import main.util.UserError;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -82,6 +90,8 @@ public class mainViewController {
         categoryListener();
         tableViewListeners();
         filterListener();
+
+        doubleClickListeners();
     }
 
     private void setTableViewWidth() {
@@ -129,6 +139,70 @@ public class mainViewController {
         tblviewMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
 
         tblviewMoviesInCategory.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
+    }
+
+    private void doubleClickListeners() {
+        tblviewMovies.setOnMouseClicked((MouseEvent event) -> {
+           if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+               String path = tblviewMovies.getSelectionModel().getSelectedItem().getPath();
+               Video v = tblviewMovies.getSelectionModel().getSelectedItem();
+               v.setLastView(LocalDate.now());
+
+               try {
+                   vMan.replace(tblviewMovies.getSelectionModel().getSelectedItem(), v);
+               } catch(SQLException e) {
+                   showError(e.getMessage());
+               }
+
+               openVideoFile(path);
+           }
+        });
+
+        tblviewMoviesInCategory.setOnMouseClicked((MouseEvent event) -> {
+            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                String path = tblviewMoviesInCategory.getSelectionModel().getSelectedItem().getPath();
+                Video v = tblviewMoviesInCategory.getSelectionModel().getSelectedItem();
+                v.setLastView(LocalDate.now());
+
+                try {
+                    vMan.replace(tblviewMoviesInCategory.getSelectionModel().getSelectedItem(), v);
+                } catch(SQLException e) {
+                    showError(e.getMessage());
+                }
+
+                openVideoFile(path);
+            }
+        });
+    }
+
+    private void filterListener() {
+        this.txtFieldSearch.textProperty().addListener((observable,oldValue,newValue) -> {
+            if(!newValue.isEmpty() && !newValue.isBlank()) {
+                tblviewMovies.setItems(vMan.search(txtFieldSearch.getText(),vMan.getAllVideos()));
+                if(selectedCategory != null) {
+                    tblviewMoviesInCategory.setItems(vMan.search(txtFieldSearch.getText(),selectedCategory.getVideos()));
+                }
+            }
+            else {
+                tblviewMovies.setItems(vMan.getAllVideos());
+                if(selectedCategory != null) {
+                    tblviewMoviesInCategory.setItems(selectedCategory.getVideos());
+                }
+            }
+        });
+    }
+
+    private void openVideoFile(String path) {
+        File f = new File(path);
+        if(f.isFile() && !f.isDirectory()) {
+            try {
+                Desktop.getDesktop().open(f);
+            } catch(IOException e) {
+                showError(e.getMessage());
+            }
+        } else {
+            showError("File with path: '"+path+"' does not exist");
+        }
     }
 
 /*
@@ -323,23 +397,4 @@ public class mainViewController {
             }
         }
     }
-
-    private void filterListener() {
-        this.txtFieldSearch.textProperty().addListener((observable,oldValue,newValue) -> {
-            if(!newValue.isEmpty() && !newValue.isBlank()) {
-                tblviewMovies.setItems(vMan.search(txtFieldSearch.getText(),vMan.getAllVideos()));
-                if(selectedCategory != null) {
-                    tblviewMoviesInCategory.setItems(vMan.search(txtFieldSearch.getText(),selectedCategory.getVideos()));
-                }
-            }
-            else {
-                tblviewMovies.setItems(vMan.getAllVideos());
-                if(selectedCategory != null) {
-                    tblviewMoviesInCategory.setItems(selectedCategory.getVideos());
-                }
-            }
-        });
-    }
-
-
 }
