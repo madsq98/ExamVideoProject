@@ -74,6 +74,15 @@ public class mainViewController {
 
         lstviewCategories.setItems(cMan.getCategories());
 
+        setTableViewWidth();
+        initMainTableView();
+        initSecondaryTableView();
+        categoryListener();
+        tableViewListeners();
+        filterListener();
+    }
+
+    private void setTableViewWidth() {
         double width = 750.0;
         mvName.setPrefWidth(width * 0.25);
         mvPath.setPrefWidth(width * 0.25);
@@ -83,29 +92,35 @@ public class mainViewController {
         catMvPath.setPrefWidth(width * 0.25);
         catMvRating.setPrefWidth(width * 0.25);
         catMvLastSeen.setPrefWidth(width * 0.25);
+    }
 
+    private void initMainTableView() {
         tblviewMovies.setItems(vMan.getAllVideos());
         mvName.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getNameProperty());
         mvPath.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getPathProperty());
         mvRating.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getRatingProperty());
         mvLastSeen.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getLastViewProperty());
+    }
 
+    private void initSecondaryTableView() {
         catMvName.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getNameProperty());
         catMvPath.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getPathProperty());
         catMvRating.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getRatingProperty());
         catMvLastSeen.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getLastViewProperty());
+    }
 
+    private void categoryListener() {
         lstviewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedCategory = newValue;
             tblviewMoviesInCategory.setItems(selectedCategory.getVideos());
             categoryLabel.setText("Category: " + selectedCategory.getName());
         });
+    }
 
+    private void tableViewListeners() {
         tblviewMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
 
         tblviewMoviesInCategory.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
-
-        filterListener();
     }
 
 /*

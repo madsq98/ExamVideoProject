@@ -27,14 +27,17 @@ public class CategoryRepository {
     public ObservableList<Category> loadCategories() throws SQLException {
         ObservableList<Category> categories = FXCollections.observableArrayList();
         String query = "SELECT * FROM Category ORDER BY id";
-        statement = connection.createStatement();
-        resultSet = statement.executeQuery(query);
-        while(resultSet.next()) {
-            Category c = new Category(resultSet.getString("name"));
-            c.setId(resultSet.getInt("ID"));
+
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+
+        while(rs.next()) {
+            Category c = new Category(rs.getString("name"));
+            c.setId(rs.getInt("ID"));
             c.addVideos(getLinkedMovies(c));
             categories.add(c);
         }
+
         return categories;
     }
 
