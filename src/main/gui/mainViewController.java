@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class mainViewController {
     private static final String ERROR_TITLE = "An error occurred!";
     private static final String ERROR_HEADER = "A mistake was made!";
@@ -90,6 +92,8 @@ public class mainViewController {
         categoryListener();
         tableViewListeners();
         filterListener();
+
+        oldVideosWarning();
 
         doubleClickListeners();
     }
@@ -190,6 +194,27 @@ public class mainViewController {
                 }
             }
         });
+    }
+
+    private void oldVideosWarning() {
+        ObservableList<Video> oldVideos = FXCollections.observableArrayList();
+        for(Video v : vMan.getAllVideos()) {
+            int diff = (int) DAYS.between(v.getLastView(),LocalDate.now());
+            if(diff > 730) {
+                if(v.getRating() < 6.0) {
+                    oldVideos.add(v);
+                }
+            }
+        }
+
+        if(!oldVideos.isEmpty()) {
+            String oldVideosText = "Warning! Remember to delete old/unwanted videos. These videos have not been seen for 2 years, and has a low rating:\n";
+            for(Video v : oldVideos) {
+                oldVideosText += v.getName() + "\n";
+            }
+
+            showError(oldVideosText);
+        }
     }
 
     private void openVideoFile(String path) {

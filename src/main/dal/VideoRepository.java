@@ -35,6 +35,7 @@ public class VideoRepository {
             v.setId(id);
             v.setRating(rating);
             v.setLastView(lastView);
+
             returnList.add(v);
         }
 
