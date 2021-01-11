@@ -175,6 +175,42 @@ public class mainViewController {
         }
     }
 
+    public void handleAddToCat(ActionEvent actionEvent) {
+        if(selectedCategory != null && selectedVideo != null) {
+            try {
+                cMan.saveLink(selectedCategory, selectedVideo);
+            } catch(SQLException e) {
+                UserError.showError(ERROR_HEADER,e.getMessage());
+            }
+        }
+    }
+
+    public void handleRemoveFromCat(ActionEvent actionEvent) {
+        if(selectedCategory != null && selectedVideo != null) {
+            try {
+                cMan.deleteLink(selectedCategory,selectedVideo);
+            } catch(SQLException e) {
+                UserError.showError(ERROR_HEADER,e.getMessage());
+            }
+        }
+    }
+
+    public void handlePlayMovie(ActionEvent actionEvent) {
+        if(selectedVideo != null) {
+            String command = "C:\\Program Files\\Windows Media Player\\wmplayer.exe";
+            String arg = selectedVideo.getPath();
+            ProcessBuilder builder = new ProcessBuilder(command, arg);
+            try {
+                builder.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            UserError.showError(ERROR_HEADER, "You have to choose a movie");
+        }
+    }
+
 /*
         Methods to open Views
  */
@@ -257,6 +293,11 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Opens the rate movie window
+     * @param fxmlPath file path to FXML document
+     */
+
     public void openRateMovie(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -273,32 +314,13 @@ public class mainViewController {
         }
     }
 
+
     private void showError(String errorText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(ERROR_TITLE);
         alert.setHeaderText(ERROR_HEADER);
         alert.setContentText(errorText);
         alert.showAndWait();
-    }
-
-    public void handleAddToCat(ActionEvent actionEvent) {
-        if(selectedCategory != null && selectedVideo != null) {
-            try {
-                cMan.saveLink(selectedCategory, selectedVideo);
-            } catch(SQLException e) {
-                UserError.showError(ERROR_HEADER,e.getMessage());
-            }
-        }
-    }
-
-    public void handleRemoveFromCat(ActionEvent actionEvent) {
-        if(selectedCategory != null && selectedVideo != null) {
-            try {
-                cMan.deleteLink(selectedCategory,selectedVideo);
-            } catch(SQLException e) {
-                UserError.showError(ERROR_HEADER,e.getMessage());
-            }
-        }
     }
 
     private void filterListener() {
@@ -317,6 +339,4 @@ public class mainViewController {
             }
         });
     }
-
-
 }

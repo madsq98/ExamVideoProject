@@ -10,6 +10,7 @@ public class SqlConnectionHandler {
     private SQLServerDataSource dataSource;
     private Connection connection;
 
+    //makes the connection to the given database.
     public SqlConnectionHandler() throws SQLException {
         dataSource = new SQLServerDataSource();
         dataSource.setServerName("10.176.111.31");

@@ -26,15 +26,25 @@ public class CategoryRepository {
     //Loads all the Categories from the database and returns it.
     public ObservableList<Category> loadCategories() throws SQLException {
         ObservableList<Category> categories = FXCollections.observableArrayList();
+
+        //HACKFIX: ADD << ALL VIDEOS >> CATEGORY, TO SHOW ALL VIDEOS
+        Category allVidsCat = new Category("<< ALL VIDEOS >>");
+        allVidsCat.setId(-1);
+
+        categories.add(allVidsCat);
+
         String query = "SELECT * FROM Category ORDER BY id";
-        statement = connection.createStatement();
-        resultSet = statement.executeQuery(query);
-        while(resultSet.next()) {
-            Category c = new Category(resultSet.getString("name"));
-            c.setId(resultSet.getInt("ID"));
+
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+
+        while(rs.next()) {
+            Category c = new Category(rs.getString("name"));
+            c.setId(rs.getInt("ID"));
             c.addVideos(getLinkedMovies(c));
             categories.add(c);
         }
+
         return categories;
     }
 
@@ -73,6 +83,7 @@ public class CategoryRepository {
         return returnId;
     }
 
+    //methode that updates the Category by creating a connection and executing the string query.
     public void update(Category categoryToUpdate) throws SQLException {
         String name = categoryToUpdate.getName();
         int id = categoryToUpdate.getId();
@@ -83,6 +94,7 @@ public class CategoryRepository {
         preparedStatement.executeUpdate();
     }
 
+    //gets the ID from the two tables Category and Movie and inserts it into CatMovie
     public void saveLink(Category c, Video v) throws SQLException{
         String query = "INSERT INTO CatMovie (CategoryId,MovieId) VALUES(?,?);";
         System.out.println(c.getId());
@@ -92,6 +104,7 @@ public class CategoryRepository {
         preparedStatement.executeUpdate();
     }
 
+    //delets from the CatMovie table
     public void deleteLink(Category c,Video v) throws SQLException{
         String query = "DELETE FROM CatMovie WHERE CategoryId=? AND MovieId=?;";
         preparedStatement = connection.prepareStatement(query);

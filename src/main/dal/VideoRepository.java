@@ -12,11 +12,12 @@ public class VideoRepository {
     private SqlConnectionHandler sqlClass;
     private Connection connection;
 
+
     public VideoRepository() throws SQLException {
         sqlClass = new SqlConnectionHandler();
         connection = sqlClass.getConnection();
     }
-
+        //selects all data from the Movie table in the database
     public ObservableList<Video> loadVideos() throws SQLException {
         String query = "SELECT * FROM MOVIE";
         Statement st = connection.createStatement();
@@ -35,19 +36,22 @@ public class VideoRepository {
             v.setId(id);
             v.setRating(rating);
             v.setLastView(lastView);
+
             returnList.add(v);
         }
 
         return returnList;
     }
-
+        //deletes a row in the Movie table where the ID = ?
     public void delete(Video videoToDelete) throws SQLException {
+        deleteAllLinks(videoToDelete);
+
         String query = "DELETE FROM MOVIE WHERE ID = ?;";
         PreparedStatement st = connection.prepareStatement(query);
         st.setInt(1, videoToDelete.getId());
         st.executeUpdate();
     }
-
+        //adds video to the database and returns an int. that shows wich can be use to identify the Movie
     public int add(Video videoToAdd) throws SQLException {
         String query = "INSERT INTO MOVIE (name, rating, path, lastview) VALUES (?, ?, ?, ?);";
         PreparedStatement st = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -67,7 +71,7 @@ public class VideoRepository {
             return 0;
         }
     }
-
+        //updates the selected movie where ID = ?
     public void update(Video videoToUpdate) throws SQLException {
         String query = "UPDATE MOVIE SET name = ?, rating = ?, path = ?, lastview = ? WHERE ID = ?;";
         PreparedStatement st = connection.prepareStatement(query);
@@ -80,7 +84,7 @@ public class VideoRepository {
 
         st.executeUpdate();
     }
-
+        //gets a specific movie from the Movie table where ID=?
     public Video getMovieFromId(int id) throws SQLException {
         String query = "SELECT * FROM MOVIE WHERE ID = ?;";
         PreparedStatement st = connection.prepareStatement(query);
@@ -96,5 +100,30 @@ public class VideoRepository {
         } else {
             return null;
         }
+    }
+
+    public boolean exists(Video v) throws SQLException {
+        String query = "SELECT * FROM MOVIE WHERE name = ? OR path = ?;";
+        PreparedStatement st = connection.prepareStatement(query);
+        st.setString(1,v.getName());
+        st.setString(2,v.getPath());
+        ResultSet rs = st.executeQuery();
+        if(rs.next()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Private function used for deleting all links between videos and categories
+     * @param v Video to delete all links for
+     * @throws SQLException
+     */
+    private void deleteAllLinks(Video v) throws SQLException {
+        String query = "DELETE FROM CatMovie WHERE MovieId = ?;";
+        PreparedStatement st = connection.prepareStatement(query);
+        st.setInt(1,v.getId());
+        st.executeUpdate();
     }
 }

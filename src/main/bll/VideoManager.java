@@ -39,6 +39,9 @@ public class VideoManager {
         }
     }
 
+    public boolean exists(Video v) throws SQLException {
+        return vRepo.exists(v);
+    }
 
     public ObservableList<Video> getAllVideos() {
         return videos;

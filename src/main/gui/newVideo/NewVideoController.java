@@ -45,8 +45,12 @@ public class NewVideoController {
         Video newVideo = new Video(title, filePath);
 
         try {
-            this.vMan.add(newVideo);
-            this.closeWin();
+            if(vMan.exists(newVideo)) {
+                UserError.showError(errorHeader,"Video title or path already exists!");
+            } else {
+                this.vMan.add(newVideo);
+                this.closeWin();
+            }
         } catch(SQLException e) {
             UserError.showError(errorHeader,e.getMessage());
         }
