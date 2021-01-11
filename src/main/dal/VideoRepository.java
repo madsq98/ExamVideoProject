@@ -102,6 +102,24 @@ public class VideoRepository {
         }
     }
 
+    public boolean exists(Video v) throws SQLException {
+        String query = "SELECT * FROM MOVIE WHERE name = ? OR path = ?;";
+        PreparedStatement st = connection.prepareStatement(query);
+        st.setString(1,v.getName());
+        st.setString(2,v.getPath());
+        ResultSet rs = st.executeQuery();
+        if(rs.next()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Private function used for deleting all links between videos and categories
+     * @param v Video to delete all links for
+     * @throws SQLException
+     */
     private void deleteAllLinks(Video v) throws SQLException {
         String query = "DELETE FROM CatMovie WHERE MovieId = ?;";
         PreparedStatement st = connection.prepareStatement(query);
