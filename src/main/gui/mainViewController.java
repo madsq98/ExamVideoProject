@@ -208,12 +208,12 @@ public class mainViewController {
         }
 
         if(!oldVideos.isEmpty()) {
-            String oldVideosText = "Warning! Remember to delete old/unwanted videos. These videos have not been seen for 2 years, and has a low rating:\n";
+            String oldVideosText = "Remember to delete old/unwanted videos. These videos have not been seen for 2 years, and has a low rating:\n";
             for(Video v : oldVideos) {
                 oldVideosText += v.getName() + "\n";
             }
 
-            showError(oldVideosText);
+            showWarning(oldVideosText);
         }
     }
 
@@ -400,6 +400,13 @@ public class mainViewController {
         alert.setTitle(ERROR_TITLE);
         alert.setHeaderText(ERROR_HEADER);
         alert.setContentText(errorText);
+        alert.showAndWait();
+    }
+
+    private void showWarning(String warningText) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText(warningText);
         alert.showAndWait();
     }
 
