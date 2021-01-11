@@ -98,6 +98,9 @@ public class mainViewController {
         doubleClickListeners();
     }
 
+    /**
+     * Sets the width of the columns in table views
+     */
     private void setTableViewWidth() {
         double width = 750.0;
         mvName.setPrefWidth(width * 0.25);
@@ -110,6 +113,9 @@ public class mainViewController {
         catMvLastSeen.setPrefWidth(width * 0.25);
     }
 
+    /**
+     * Initializes main table view, links it with Video Manager
+     */
     private void initMainTableView() {
         tblviewMovies.setItems(vMan.getAllVideos());
         mvName.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getNameProperty());
@@ -118,6 +124,9 @@ public class mainViewController {
         mvLastSeen.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getLastViewProperty());
     }
 
+    /**
+     * Initializes videos-in-category table view, links values
+     */
     private void initSecondaryTableView() {
         catMvName.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getNameProperty());
         catMvPath.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getPathProperty());
@@ -125,6 +134,9 @@ public class mainViewController {
         catMvLastSeen.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getLastViewProperty());
     }
 
+    /**
+     * Listens for changes in chosen category, changes items in videos-in-category table view
+     */
     private void categoryListener() {
         lstviewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue.getId() != -1) {
@@ -139,12 +151,18 @@ public class mainViewController {
         });
     }
 
+    /**
+     * Listens for changes in selected video
+     */
     private void tableViewListeners() {
         tblviewMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
 
         tblviewMoviesInCategory.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
     }
 
+    /**
+     * Listens for double clicks on tableview items
+     */
     private void doubleClickListeners() {
         tblviewMovies.setOnMouseClicked((MouseEvent event) -> {
            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
@@ -179,6 +197,9 @@ public class mainViewController {
         });
     }
 
+    /**
+     * Listens for changes in text in Filter/Search field
+     */
     private void filterListener() {
         this.txtFieldSearch.textProperty().addListener((observable,oldValue,newValue) -> {
             if(!newValue.isEmpty() && !newValue.isBlank()) {
@@ -196,6 +217,9 @@ public class mainViewController {
         });
     }
 
+    /**
+     * Shows warning to user when movies are old & low rating
+     */
     private void oldVideosWarning() {
         ObservableList<Video> oldVideos = FXCollections.observableArrayList();
         for(Video v : vMan.getAllVideos()) {
@@ -217,6 +241,10 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Private function used for opening video files
+     * @param path Path to file
+     */
     private void openVideoFile(String path) {
         File f = new File(path);
         if(f.isFile() && !f.isDirectory()) {
@@ -234,11 +262,17 @@ public class mainViewController {
         Category buttons
  */
 
-    public void handleAddCategory(ActionEvent actionEvent) {
+    /**
+     * Opens new view for adding a new category
+     */
+    public void handleAddCategory() {
         openNewCategory("newCategory/NewCategoryView.fxml");
     }
 
-    public void handleRemoveCategory(ActionEvent actionEvent) {
+    /**
+     * Tries to delete category, shows error if not succeeded
+     */
+    public void handleRemoveCategory() {
         if(selectedCategory != null) {
             try {
                 cMan.delete(selectedCategory);
@@ -251,7 +285,10 @@ public class mainViewController {
         }
     }
 
-    public void handleEditCategory(ActionEvent actionEvent) {
+    /**
+     * Opens new view for editing category
+     */
+    public void handleEditCategory() {
         if(selectedCategory != null) {
             openEditCategory("editCategory/EditCategoryView.fxml");
         }
@@ -262,11 +299,18 @@ public class mainViewController {
 /*
         Movie buttons
  */
-    public void handleAddMovie(ActionEvent actionEvent) {
+
+    /**
+     * Opens new view for adding new video
+     */
+    public void handleAddMovie() {
         openNewMovie("newVideo/NewVideoView.fxml");
     }
 
-    public void handleRemoveMovie(ActionEvent actionEvent) {
+    /**
+     * Tries to delete selected movie, shows error if not succeeded
+     */
+    public void handleRemoveMovie() {
         if(selectedVideo != null) {
             try {
                 vMan.delete(selectedVideo);
@@ -279,7 +323,10 @@ public class mainViewController {
         }
     }
 
-    public void handleEditMovie(ActionEvent actionEvent) {
+    /**
+     * Opens new view for editing video
+     */
+    public void handleEditMovie() {
         if(selectedVideo != null) {
             openEditMovie("editVideo/EditVideoView.fxml");
         }
@@ -288,7 +335,10 @@ public class mainViewController {
         }
     }
 
-    public void handleRateMovie(ActionEvent actionEvent) {
+    /**
+     * Opens new view for rating video
+     */
+    public void handleRateMovie() {
         if(selectedVideo != null) {
             openRateMovie("rateMovie/RatingView.fxml");
         }
@@ -379,6 +429,10 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Opens the rate movie window
+     * @param fxmlPath file path to FXML document
+     */
     public void openRateMovie(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -395,6 +449,10 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Internal function for showing an error
+     * @param errorText Text to be displayed
+     */
     private void showError(String errorText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(ERROR_TITLE);
@@ -403,6 +461,10 @@ public class mainViewController {
         alert.showAndWait();
     }
 
+    /**
+     * Internal function showing a warning
+     * @param warningText Text to be displayed
+     */
     private void showWarning(String warningText) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
@@ -410,7 +472,10 @@ public class mainViewController {
         alert.showAndWait();
     }
 
-    public void handleAddToCat(ActionEvent actionEvent) {
+    /**
+     * Adds video to category
+     */
+    public void handleAddToCat() {
         if(selectedCategory != null && selectedVideo != null) {
             try {
                 cMan.saveLink(selectedCategory, selectedVideo);
@@ -420,7 +485,10 @@ public class mainViewController {
         }
     }
 
-    public void handleRemoveFromCat(ActionEvent actionEvent) {
+    /**
+     * Removes video from category
+     */
+    public void handleRemoveFromCat() {
         if(selectedCategory != null && selectedVideo != null) {
             try {
                 cMan.deleteLink(selectedCategory,selectedVideo);

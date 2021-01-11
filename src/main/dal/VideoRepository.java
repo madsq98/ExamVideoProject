@@ -44,6 +44,8 @@ public class VideoRepository {
     }
         //deletes a row in the Movie table where the ID = ?
     public void delete(Video videoToDelete) throws SQLException {
+        deleteAllLinks(videoToDelete);
+
         String query = "DELETE FROM MOVIE WHERE ID = ?;";
         PreparedStatement st = connection.prepareStatement(query);
         st.setInt(1, videoToDelete.getId());
@@ -98,5 +100,12 @@ public class VideoRepository {
         } else {
             return null;
         }
+    }
+
+    private void deleteAllLinks(Video v) throws SQLException {
+        String query = "DELETE FROM CatMovie WHERE MovieId = ?;";
+        PreparedStatement st = connection.prepareStatement(query);
+        st.setInt(1,v.getId());
+        st.executeUpdate();
     }
 }
