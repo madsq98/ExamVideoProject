@@ -1,5 +1,7 @@
 package main.gui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -111,9 +113,15 @@ public class mainViewController {
 
     private void categoryListener() {
         lstviewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            selectedCategory = newValue;
-            tblviewMoviesInCategory.setItems(selectedCategory.getVideos());
-            categoryLabel.setText("Category: " + selectedCategory.getName());
+            if(newValue.getId() != -1) {
+                selectedCategory = newValue;
+                tblviewMoviesInCategory.setItems(selectedCategory.getVideos());
+                categoryLabel.setText("Category: " + selectedCategory.getName());
+            } else {
+                selectedCategory = null;
+                tblviewMoviesInCategory.setItems(null);
+                categoryLabel.setText("Category: NONE SELECTED");
+            }
         });
     }
 
@@ -321,13 +329,13 @@ public class mainViewController {
             if(!newValue.isEmpty() && !newValue.isBlank()) {
                 tblviewMovies.setItems(vMan.search(txtFieldSearch.getText(),vMan.getAllVideos()));
                 if(selectedCategory != null) {
-                    tblviewMovies.setItems(vMan.search(txtFieldSearch.getText(),selectedCategory.getVideos()));
+                    tblviewMoviesInCategory.setItems(vMan.search(txtFieldSearch.getText(),selectedCategory.getVideos()));
                 }
             }
             else {
                 tblviewMovies.setItems(vMan.getAllVideos());
                 if(selectedCategory != null) {
-                    tblviewMovies.setItems(selectedCategory.getVideos());
+                    tblviewMoviesInCategory.setItems(selectedCategory.getVideos());
                 }
             }
         });

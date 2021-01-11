@@ -26,6 +26,13 @@ public class CategoryRepository {
     //Loads all the Categories from the database and returns it.
     public ObservableList<Category> loadCategories() throws SQLException {
         ObservableList<Category> categories = FXCollections.observableArrayList();
+
+        //HACKFIX: ADD << ALL VIDEOS >> CATEGORY, TO SHOW ALL VIDEOS
+        Category allVidsCat = new Category("<< ALL VIDEOS >>");
+        allVidsCat.setId(-1);
+
+        categories.add(allVidsCat);
+
         String query = "SELECT * FROM Category ORDER BY id";
 
         Statement st = connection.createStatement();
