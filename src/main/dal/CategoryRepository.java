@@ -83,6 +83,7 @@ public class CategoryRepository {
         return returnId;
     }
 
+    //methode that updates the Category by creating a connection and executing the string query.
     public void update(Category categoryToUpdate) throws SQLException {
         String name = categoryToUpdate.getName();
         int id = categoryToUpdate.getId();
@@ -93,6 +94,7 @@ public class CategoryRepository {
         preparedStatement.executeUpdate();
     }
 
+    //gets the ID from the two tables Category and Movie and inserts it into CatMovie
     public void saveLink(Category c, Video v) throws SQLException{
         String query = "INSERT INTO CatMovie (CategoryId,MovieId) VALUES(?,?);";
         System.out.println(c.getId());
@@ -102,6 +104,7 @@ public class CategoryRepository {
         preparedStatement.executeUpdate();
     }
 
+    //delets from the CatMovie table
     public void deleteLink(Category c,Video v) throws SQLException{
         String query = "DELETE FROM CatMovie WHERE CategoryId=? AND MovieId=?;";
         preparedStatement = connection.prepareStatement(query);
