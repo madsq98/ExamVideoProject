@@ -328,13 +328,13 @@ public class mainViewController {
             if(!newValue.isEmpty() && !newValue.isBlank()) {
                 tblviewMovies.setItems(vMan.search(txtFieldSearch.getText(),vMan.getAllVideos()));
                 if(selectedCategory != null) {
-                    tblviewMovies.setItems(vMan.search(txtFieldSearch.getText(),selectedCategory.getVideos()));
+                    tblviewMoviesInCategory.setItems(vMan.search(txtFieldSearch.getText(),selectedCategory.getVideos()));
                 }
             }
             else {
                 tblviewMovies.setItems(vMan.getAllVideos());
                 if(selectedCategory != null) {
-                    tblviewMovies.setItems(selectedCategory.getVideos());
+                    tblviewMoviesInCategory.setItems(selectedCategory.getVideos());
                 }
             }
         });

@@ -47,6 +47,7 @@ public class VideoManager {
         return videos;
     }
 
+
     public ObservableList<Video> search(String filter, ObservableList<Video> videos) {
         ObservableList<Video> returnList = FXCollections.observableArrayList();
         char[] filterChars = filter.toCharArray();
