@@ -62,6 +62,8 @@ public class CategoryRepository {
     }
     //Deletes a Category in the database table "category".
     public void delete(Category categoryToDelete) throws SQLException {
+        deleteAllLinks(categoryToDelete);
+
         String sql = "DELETE FROM Category WHERE ID = ?";
         PreparedStatement st = connection.prepareStatement(sql);
         st.setInt(1,categoryToDelete.getId());
@@ -110,6 +112,13 @@ public class CategoryRepository {
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1,c.getId());
         preparedStatement.setInt(2,v.getId());
+        preparedStatement.executeUpdate();
+    }
+
+    private void deleteAllLinks(Category c) throws SQLException {
+        String query = "DELETE FROM CatMovie WHERE CategoryId=?;";
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1,c.getId());
         preparedStatement.executeUpdate();
     }
 }
