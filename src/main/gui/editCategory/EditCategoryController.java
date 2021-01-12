@@ -17,10 +17,18 @@ public class EditCategoryController {
     public Category selectedCategory;
     private String errorHeader = "Something went wrong!";
 
+    /**
+     * Cancel function
+     * @param actionEvent
+     */
     public void handleCancel(ActionEvent actionEvent) {
         closeWin();
     }
 
+    /**
+     * Save function
+     * @param actionEvent
+     */
     public void handleSave(ActionEvent actionEvent) {
         if(!txtCategory.getText().isEmpty()) {
             Category newCategory = new Category(txtCategory.getText());
@@ -40,16 +48,26 @@ public class EditCategoryController {
 
     }
 
+    /**
+     * Setting manager for saving info
+     * @param cMan selected manager
+     */
     public void setManager(CategoryManager cMan) {
         this.cMan = cMan;
     }
 
-
+    /**
+     * Closes window
+     */
     private void closeWin(){
         Stage stage = (Stage) btnCancelEditCategory.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Set selected category
+     * @param selectedCategory selected category
+     */
     public void setSelectedCategory(Category selectedCategory) {
         this.selectedCategory = selectedCategory;
         txtCategory.setText(selectedCategory.getName());

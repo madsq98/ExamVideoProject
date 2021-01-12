@@ -12,12 +12,20 @@ public class VideoRepository {
     private SqlConnectionHandler sqlClass;
     private Connection connection;
 
-
+    /**
+     * Constructor for Video Repository
+     * @throws SQLException SQL Error
+     */
     public VideoRepository() throws SQLException {
         sqlClass = new SqlConnectionHandler();
         connection = sqlClass.getConnection();
     }
-        //selects all data from the Movie table in the database
+
+    /**
+     * Loads videos from database
+     * @return List of videos
+     * @throws SQLException SQL Error
+     */
     public ObservableList<Video> loadVideos() throws SQLException {
         String query = "SELECT * FROM MOVIE";
         Statement st = connection.createStatement();
@@ -42,7 +50,12 @@ public class VideoRepository {
 
         return returnList;
     }
-        //deletes a row in the Movie table where the ID = ?
+
+    /**
+     * Deletes video from database
+     * @param videoToDelete video to delete
+     * @throws SQLException SQL Error
+     */
     public void delete(Video videoToDelete) throws SQLException {
         deleteAllLinks(videoToDelete);
 
@@ -51,7 +64,13 @@ public class VideoRepository {
         st.setInt(1, videoToDelete.getId());
         st.executeUpdate();
     }
-        //adds video to the database and returns an int. that shows wich can be use to identify the Movie
+
+    /**
+     * Adds video to database
+     * @param videoToAdd video to add
+     * @return id of the added video
+     * @throws SQLException SQL Error
+     */
     public int add(Video videoToAdd) throws SQLException {
         String query = "INSERT INTO MOVIE (name, rating, path, lastview) VALUES (?, ?, ?, ?);";
         PreparedStatement st = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -71,7 +90,12 @@ public class VideoRepository {
             return 0;
         }
     }
-        //updates the selected movie where ID = ?
+
+    /**
+     * Updates video in database, by using the id
+     * @param videoToUpdate video to update
+     * @throws SQLException SQL Error
+     */
     public void update(Video videoToUpdate) throws SQLException {
         String query = "UPDATE MOVIE SET name = ?, rating = ?, path = ?, lastview = ? WHERE ID = ?;";
         PreparedStatement st = connection.prepareStatement(query);
@@ -84,7 +108,13 @@ public class VideoRepository {
 
         st.executeUpdate();
     }
-        //gets a specific movie from the Movie table where ID=?
+
+    /**
+     * Gets movie from id
+     * @param id id to search
+     * @return video
+     * @throws SQLException SQL Error
+     */
     public Video getMovieFromId(int id) throws SQLException {
         String query = "SELECT * FROM MOVIE WHERE ID = ?;";
         PreparedStatement st = connection.prepareStatement(query);
@@ -102,6 +132,12 @@ public class VideoRepository {
         }
     }
 
+    /**
+     * Check if video exsists
+     * @param v video to check
+     * @return true if video exists, false if not
+     * @throws SQLException SQL Error
+     */
     public boolean exists(Video v) throws SQLException {
         String query = "SELECT * FROM MOVIE WHERE name = ? OR path = ?;";
         PreparedStatement st = connection.prepareStatement(query);
@@ -118,7 +154,7 @@ public class VideoRepository {
     /**
      * Private function used for deleting all links between videos and categories
      * @param v Video to delete all links for
-     * @throws SQLException
+     * @throws SQLException SQL Error
      */
     private void deleteAllLinks(Video v) throws SQLException {
         String query = "DELETE FROM CatMovie WHERE MovieId = ?;";

@@ -21,11 +21,19 @@ public class NewVideoController {
 
     private VideoManager vMan;
 
+    /**
+     * Cancel function
+     * @param actionEvent
+     */
     public void handleCancel(ActionEvent actionEvent) {
         closeWin();
     }
 
-    public void handleSave(ActionEvent actionEvent) throws SQLException {
+    /**
+     * Save function
+     * @param actionEvent
+     */
+    public void handleSave(ActionEvent actionEvent) {
         String errorHeader = "Something went wrong!";
         String title = txtVideoTitle.getText();
         String filePath = txtVideoFile.getText();
@@ -56,8 +64,16 @@ public class NewVideoController {
         }
     }
 
+    /**
+     * Sets manager
+     * @param vMan selected manager
+     */
     public void setManager(VideoManager vMan) {this.vMan = vMan;}
 
+    /**
+     * Opens file choose window
+     * @param actionEvent
+     */
     public void handleChooseVideoFile(ActionEvent actionEvent) {
         try {
             Stage stage = (Stage) btnCancelNewVideo.getScene().getWindow();
@@ -71,6 +87,9 @@ public class NewVideoController {
         }
     }
 
+    /**
+     * Closes window
+     */
     private void closeWin(){
         Stage stage = (Stage) btnCancelNewVideo.getScene().getWindow();
         stage.close();

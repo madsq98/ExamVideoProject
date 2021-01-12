@@ -10,7 +10,10 @@ public class SqlConnectionHandler {
     private SQLServerDataSource dataSource;
     private Connection connection;
 
-    //makes the connection to the given database.
+    /**
+     * Constructor. Instantiates the connection to the database
+     * @throws SQLException SQL Error
+     */
     public SqlConnectionHandler() throws SQLException {
         dataSource = new SQLServerDataSource();
         dataSource.setServerName("10.176.111.31");
@@ -21,6 +24,10 @@ public class SqlConnectionHandler {
         connection = dataSource.getConnection();
     }
 
+    /**
+     * Gets the connection
+     * @return connection
+     */
     public Connection getConnection() {
         if(connection != null) {
             return connection;

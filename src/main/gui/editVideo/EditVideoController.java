@@ -19,6 +19,10 @@ public class EditVideoController {
     private VideoManager vMan;
     public Video selectedVideo;
 
+    /**
+     * Opens file chooser window
+     * @param actionEvent
+     */
     public void handleChooseVideoFile(ActionEvent actionEvent) {
         try {
             Stage stage = (Stage) btnCancelEditVideo.getScene().getWindow();
@@ -32,8 +36,16 @@ public class EditVideoController {
         }
     }
 
+    /**
+     * Cancel function
+     * @param actionEvent
+     */
     public void handleCancel(ActionEvent actionEvent) {closeWin();    }
 
+    /**
+     * Save function
+     * @param actionEvent
+     */
     public void handleSave(ActionEvent actionEvent) {
         String errorHeader = "Something went wrong!";
         String title = txtVideoTitle.getText();
@@ -64,15 +76,26 @@ public class EditVideoController {
         }
     }
 
+    /**
+     * Sets manager
+     * @param vMan manager
+     */
     public void setManager(VideoManager vMan) {
         this.vMan = vMan;
     }
 
+    /**
+     * Closes window
+     */
     private void closeWin(){
         Stage stage = (Stage) btnCancelEditVideo.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Sets selected video
+     * @param selectedVideo selected video
+     */
     public void setSelectedVideo(Video selectedVideo) {
         this.selectedVideo = selectedVideo;
         txtVideoTitle.setText(selectedVideo.getName());

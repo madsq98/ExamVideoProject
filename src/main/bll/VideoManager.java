@@ -12,6 +12,10 @@ public class VideoManager {
     private ObservableList<Video> videos;
     private VideoRepository vRepo;
 
+    /**
+     * Constructor for Video Manager
+     * @throws SQLException SQL Error
+     */
     public VideoManager() throws SQLException {
         videos = FXCollections.observableArrayList();
         vRepo = new VideoRepository();
@@ -19,17 +23,33 @@ public class VideoManager {
         videos.addAll(vRepo.loadVideos());
     }
 
+    /**
+     * Adds video to memory
+     * @param v video to add
+     * @throws SQLException SQL Error
+     */
     public void add(Video v) throws SQLException {
         int newId = vRepo.add(v);
         v.setId(newId);
         videos.add(v);
     }
 
+    /**
+     * Deletes video from memory
+     * @param v video to delete
+     * @throws SQLException SQL Error
+     */
     public void delete(Video v) throws SQLException {
         vRepo.delete(v);
         videos.remove(v);
     }
 
+    /**
+     * Replaces videos in memory
+     * @param s video to be replaced
+     * @param r video to replace
+     * @throws SQLException SQL Error
+     */
     public void replace(Video s, Video r) throws SQLException {
         vRepo.update(r);
         for(int i = 0; i < videos.size(); i++) {
@@ -39,15 +59,30 @@ public class VideoManager {
         }
     }
 
+    /**
+     * Check if video title/path exists in database
+     * @param v video to check
+     * @return true if exists, false if not
+     * @throws SQLException SQL Error
+     */
     public boolean exists(Video v) throws SQLException {
         return vRepo.exists(v);
     }
 
+    /**
+     * Gets list of all videos
+     * @return list of videos
+     */
     public ObservableList<Video> getAllVideos() {
         return videos;
     }
 
-
+    /**
+     * Filter function for searching
+     * @param filter chosen filter
+     * @param videos list to search in
+     * @return list of results
+     */
     public ObservableList<Video> search(String filter, ObservableList<Video> videos) {
         ObservableList<Video> returnList = FXCollections.observableArrayList();
         char[] filterChars = filter.toCharArray();

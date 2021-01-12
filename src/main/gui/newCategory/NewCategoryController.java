@@ -19,14 +19,27 @@ public class NewCategoryController {
 
     private String errorHeader = "Something went wrong";
 
+    /**
+     * Sets manager
+     * @param cMan selected manager
+     */
     public void setManager(CategoryManager cMan) {
         this.cMan = cMan;
     }
 
+    /**
+     * Cancel function
+     * @param actionEvent
+     */
     public void handleCancel(ActionEvent actionEvent) {
         closeWin();
     }
 
+    /**
+     * Save function
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void handleSave(ActionEvent actionEvent) throws SQLException {
         if(!txtCategory.getText().isEmpty()) {
             Category newCategory = new Category(txtCategory.getText());
@@ -43,6 +56,9 @@ public class NewCategoryController {
         }
     }
 
+    /**
+     * Closes window
+     */
     private void closeWin(){
         Stage stage = (Stage) btnCancelNewCategory.getScene().getWindow();
         stage.close();

@@ -16,6 +16,10 @@ public class CategoryRepository {
     private Statement statement = null;
     private ResultSet resultSet = null;
 
+    /**
+     * Constructor for Category Repository
+     * @throws SQLException SQL Error
+     */
     public CategoryRepository() throws SQLException {
         vRepo = new VideoRepository();
 
@@ -23,7 +27,11 @@ public class CategoryRepository {
         connection = sqlClass.getConnection();
     }
 
-    //Loads all the Categories from the database and returns it.
+    /**
+     * Loads all categories from DB and returns it
+     * @return list of categories
+     * @throws SQLException SQL Error
+     */
     public ObservableList<Category> loadCategories() throws SQLException {
         ObservableList<Category> categories = FXCollections.observableArrayList();
 
@@ -48,7 +56,12 @@ public class CategoryRepository {
         return categories;
     }
 
-
+    /**
+     * Get movies associated via CatMovie to selected category
+     * @param c category to check
+     * @return list of movies
+     * @throws SQLException SQL Error
+     */
     public ObservableList<Video> getLinkedMovies(Category c) throws SQLException {
         ObservableList<Video> movies = FXCollections.observableArrayList();
         String query = "SELECT * FROM CatMovie WHERE CategoryId = ?;";
@@ -60,7 +73,12 @@ public class CategoryRepository {
         }
         return movies;
     }
-    //Deletes a Category in the database table "category".
+
+    /**
+     * Deletes category from database
+     * @param categoryToDelete category to be deleted
+     * @throws SQLException SQL Error
+     */
     public void delete(Category categoryToDelete) throws SQLException {
         deleteAllLinks(categoryToDelete);
 
@@ -69,8 +87,13 @@ public class CategoryRepository {
         st.setInt(1,categoryToDelete.getId());
         st.executeUpdate();
     }
-    //Adds a  new Category to the Category table. The added values will only be String name since ID will autoincrement.
-    //returns the matched ID.
+
+    /**
+     * Adds category to DB
+     * @param categoryToAdd category to add
+     * @return ID of the added category
+     * @throws SQLException SQL Error
+     */
     public int add(Category categoryToAdd) throws SQLException {
         int returnId = -1;
         String name = categoryToAdd.getName();
@@ -85,7 +108,11 @@ public class CategoryRepository {
         return returnId;
     }
 
-    //methode that updates the Category by creating a connection and executing the string query.
+    /**
+     * Updates the settings of category in database, by using ID
+     * @param categoryToUpdate category to be updated
+     * @throws SQLException SQL Error
+     */
     public void update(Category categoryToUpdate) throws SQLException {
         String name = categoryToUpdate.getName();
         int id = categoryToUpdate.getId();
@@ -96,7 +123,12 @@ public class CategoryRepository {
         preparedStatement.executeUpdate();
     }
 
-    //gets the ID from the two tables Category and Movie and inserts it into CatMovie
+    /**
+     * Saves a link between category & movie in table CatMovie
+     * @param c category
+     * @param v movie
+     * @throws SQLException SQL Error
+     */
     public void saveLink(Category c, Video v) throws SQLException{
         String query = "INSERT INTO CatMovie (CategoryId,MovieId) VALUES(?,?);";
         System.out.println(c.getId());
@@ -106,7 +138,12 @@ public class CategoryRepository {
         preparedStatement.executeUpdate();
     }
 
-    //delets from the CatMovie table
+    /**
+     * Deletes a link between category & movie in table CatMovie
+     * @param c category
+     * @param v movie
+     * @throws SQLException SQL Error
+     */
     public void deleteLink(Category c,Video v) throws SQLException{
         String query = "DELETE FROM CatMovie WHERE CategoryId=? AND MovieId=?;";
         preparedStatement = connection.prepareStatement(query);
@@ -115,6 +152,11 @@ public class CategoryRepository {
         preparedStatement.executeUpdate();
     }
 
+    /**
+     * Deletes all links associated with category from table CatMovie
+     * @param c category
+     * @throws SQLException SQL Error
+     */
     private void deleteAllLinks(Category c) throws SQLException {
         String query = "DELETE FROM CatMovie WHERE CategoryId=?;";
         preparedStatement = connection.prepareStatement(query);

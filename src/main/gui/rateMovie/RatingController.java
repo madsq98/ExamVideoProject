@@ -22,6 +22,9 @@ public class RatingController {
     private VideoManager vMan;
     private Video selectedVideo;
 
+    /**
+     * Initialize function for rating window
+     */
     public void initialize() {
         sliderRating.setMin(0.0);
         sliderRating.setMax(10.0);
@@ -38,12 +41,19 @@ public class RatingController {
             }
         });
     }
-    
 
+    /**
+     * Cancel function
+     * @param actionEvent
+     */
     public void handleCancel(ActionEvent actionEvent) {
         closeWin();
     }
 
+    /**
+     * Save function
+     * @param actionEvent
+     */
     public void handleSaveRating(ActionEvent actionEvent) {
         Video newVideo = new Video(selectedVideo.getName(), selectedVideo.getPath());
         newVideo.setId(selectedVideo.getId());
@@ -63,15 +73,26 @@ public class RatingController {
 
     }
 
+    /**
+     * Close window
+     */
     private void closeWin(){
         Stage stage = (Stage) btnCancelRating.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Sets manager
+     * @param vMan selected manager
+     */
     public void setManager(VideoManager vMan) {
         this.vMan = vMan;
     }
 
+    /**
+     * Sets selected video
+     * @param selectedVideo selected video
+     */
     public void setSelectedVideo(Video selectedVideo) {
         this.selectedVideo = selectedVideo;
     }
