@@ -5,6 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import main.be.Category;
 import main.be.Video;
@@ -17,6 +22,8 @@ import main.gui.newVideo.NewVideoController;
 import main.gui.rateMovie.RatingController;
 import main.util.UserError;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -72,8 +79,10 @@ public class mainViewController {
             showError(e.getMessage());
         }
 
+        //Sets items of list view for categories
         lstviewCategories.setItems(cMan.getCategories());
 
+        //Sets width of table view columns
         double width = 750.0;
         mvName.setPrefWidth(width * 0.25);
         mvPath.setPrefWidth(width * 0.25);
@@ -84,38 +93,91 @@ public class mainViewController {
         catMvRating.setPrefWidth(width * 0.25);
         catMvLastSeen.setPrefWidth(width * 0.25);
 
+        //Set items and columns for table view for all movies
         tblviewMovies.setItems(vMan.getAllVideos());
         mvName.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getNameProperty());
         mvPath.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getPathProperty());
         mvRating.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getRatingProperty());
         mvLastSeen.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getLastViewProperty());
 
+        //Set columns for table view for movies in category (items are set in listener below)
         catMvName.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getNameProperty());
         catMvPath.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getPathProperty());
         catMvRating.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getRatingProperty());
         catMvLastSeen.cellValueFactoryProperty().setValue(cellData -> cellData.getValue().getLastViewProperty());
 
+        //Listener for selected category
         lstviewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedCategory = newValue;
-            tblviewMoviesInCategory.setItems(selectedCategory.getVideos());
-            categoryLabel.setText("Category: " + selectedCategory.getName());
+            if(selectedCategory != null) {
+                if(selectedCategory.getId() != -1) {
+                    categoryLabel.setText("Category: " + selectedCategory.getName());
+                    tblviewMoviesInCategory.setItems(selectedCategory.getVideos());
+                }
+                else {
+                    categoryLabel.setText("Category: NONE SELECTED");
+                    tblviewMoviesInCategory.setItems(null);
+                }
+            } else {
+                tblviewMoviesInCategory.setItems(null);
+                categoryLabel.setText("Category: NONE SELECTED");
+            }
         });
 
+        //Listener for selected movie in all movies
         tblviewMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
 
+        //Listener for selected movie in category movies
         tblviewMoviesInCategory.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedVideo = newValue);
 
+        //Listener for double click on all movies
+        tblviewMovies.setOnMouseClicked((MouseEvent event) -> {
+            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                try {
+                    File f = new File(tblviewMovies.getSelectionModel().getSelectedItem().getPath());
+                    if(f.isFile() && !f.isDirectory()) {
+                        Desktop.getDesktop().open(f);
+                    }
+                    else {
+                        showError("File '" + f.getPath() + "' does not exist!");
+                    }
+                } catch(IOException e) {
+                    showError(e.getMessage());
+                }
+            }
+        });
+
+        //Listener for double click on category movies
+        tblviewMoviesInCategory.setOnMouseClicked((MouseEvent event) -> {
+            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                try {
+                    File f = new File(tblviewMoviesInCategory.getSelectionModel().getSelectedItem().getPath());
+                    if(f.isFile() && !f.isDirectory()) {
+                        Desktop.getDesktop().open(f);
+                    }
+                    else {
+                        showError("File '" + f.getPath() + "' does not exist!");
+                    }
+                } catch(IOException e) {
+                    showError(e.getMessage());
+                }
+            }
+        });
         filterListener();
     }
 
-/*
-        Category buttons
- */
-
+    /**
+     * Button click on add category
+     * @param actionEvent
+     */
     public void handleAddCategory(ActionEvent actionEvent) {
         openNewCategory("newCategory/NewCategoryView.fxml");
     }
 
+    /**
+     * Button click on delete category
+     * @param actionEvent
+     */
     public void handleRemoveCategory(ActionEvent actionEvent) {
         if(selectedCategory != null) {
             try {
@@ -129,6 +191,10 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Button click on edit category
+     * @param actionEvent
+     */
     public void handleEditCategory(ActionEvent actionEvent) {
         if(selectedCategory != null) {
             openEditCategory("editCategory/EditCategoryView.fxml");
@@ -137,13 +203,19 @@ public class mainViewController {
             showError("You have to choose a category!");
         }
     }
-/*
-        Movie buttons
- */
+
+    /**
+     * Button click on add movie
+     * @param actionEvent
+     */
     public void handleAddMovie(ActionEvent actionEvent) {
         openNewMovie("newVideo/NewVideoView.fxml");
     }
 
+    /**
+     * Button click on delete movie
+     * @param actionEvent
+     */
     public void handleRemoveMovie(ActionEvent actionEvent) {
         if(selectedVideo != null) {
             try {
@@ -157,6 +229,10 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Button click on edit movie
+     * @param actionEvent
+     */
     public void handleEditMovie(ActionEvent actionEvent) {
         if(selectedVideo != null) {
             openEditMovie("editVideo/EditVideoView.fxml");
@@ -166,6 +242,10 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Button click on rate movie
+     * @param actionEvent
+     */
     public void handleRateMovie(ActionEvent actionEvent) {
         if(selectedVideo != null) {
             openRateMovie("rateMovie/RatingView.fxml");
@@ -175,6 +255,10 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Button click on add to category
+     * @param actionEvent
+     */
     public void handleAddToCat(ActionEvent actionEvent) {
         if(selectedCategory != null && selectedVideo != null) {
             try {
@@ -185,6 +269,10 @@ public class mainViewController {
         }
     }
 
+    /**
+     * Button click on remove from category
+     * @param actionEvent
+     */
     public void handleRemoveFromCat(ActionEvent actionEvent) {
         if(selectedCategory != null && selectedVideo != null) {
             try {
@@ -194,26 +282,6 @@ public class mainViewController {
             }
         }
     }
-
-    public void handlePlayMovie(ActionEvent actionEvent) {
-        if(selectedVideo != null) {
-            String command = "C:\\Program Files\\Windows Media Player\\wmplayer.exe";
-            String arg = selectedVideo.getPath();
-            ProcessBuilder builder = new ProcessBuilder(command, arg);
-            try {
-                builder.start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else {
-            UserError.showError(ERROR_HEADER, "You have to choose a movie");
-        }
-    }
-
-/*
-        Methods to open Views
- */
 
     /**
      * Opens the new category window
@@ -314,7 +382,10 @@ public class mainViewController {
         }
     }
 
-
+    /**
+     * Private function for showing error
+     * @param errorText
+     */
     private void showError(String errorText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(ERROR_TITLE);
@@ -323,6 +394,9 @@ public class mainViewController {
         alert.showAndWait();
     }
 
+    /**
+     * Search function in main view
+     */
     private void filterListener() {
         this.txtFieldSearch.textProperty().addListener((observable,oldValue,newValue) -> {
             if(!newValue.isEmpty() && !newValue.isBlank()) {
