@@ -1,5 +1,7 @@
 package main.gui;
 
+import com.sun.javafx.iio.ios.IosDescriptor;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -75,8 +77,19 @@ public class mainViewController {
         try {
             vMan = new VideoManager();
             cMan = new CategoryManager();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             showError(e.getMessage());
+        }
+
+        //Check for old videos
+        ObservableList<Video> oldVideos = vMan.getOldVideos();
+        if (!oldVideos.isEmpty()) {
+            String warningText = "Remember to delete old/low-ranked videos! These videos are over 2 years old, and with a ranking below 6.0:\n";
+            for (Video v : oldVideos) {
+                warningText += v.getName() + "\n";
+            }
+
+            showWarning(warningText);
         }
 
         //Sets items of list view for categories
@@ -109,12 +122,11 @@ public class mainViewController {
         //Listener for selected category
         lstviewCategories.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedCategory = newValue;
-            if(selectedCategory != null) {
-                if(selectedCategory.getId() != -1) {
+            if (selectedCategory != null) {
+                if (selectedCategory.getId() != -1) {
                     categoryLabel.setText("Category: " + selectedCategory.getName());
                     tblviewMoviesInCategory.setItems(selectedCategory.getVideos());
-                }
-                else {
+                } else {
                     categoryLabel.setText("Category: NONE SELECTED");
                     tblviewMoviesInCategory.setItems(null);
                 }
@@ -132,38 +144,43 @@ public class mainViewController {
 
         //Listener for double click on all movies
         tblviewMovies.setOnMouseClicked((MouseEvent event) -> {
-            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                try {
-                    File f = new File(tblviewMovies.getSelectionModel().getSelectedItem().getPath());
-                    if(f.isFile() && !f.isDirectory()) {
-                        Desktop.getDesktop().open(f);
-                    }
-                    else {
-                        showError("File '" + f.getPath() + "' does not exist!");
-                    }
-                } catch(IOException e) {
-                    showError(e.getMessage());
-                }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                showMovie(tblviewMovies.getSelectionModel().getSelectedItem());
             }
         });
 
         //Listener for double click on category movies
         tblviewMoviesInCategory.setOnMouseClicked((MouseEvent event) -> {
-            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                try {
-                    File f = new File(tblviewMoviesInCategory.getSelectionModel().getSelectedItem().getPath());
-                    if(f.isFile() && !f.isDirectory()) {
-                        Desktop.getDesktop().open(f);
-                    }
-                    else {
-                        showError("File '" + f.getPath() + "' does not exist!");
-                    }
-                } catch(IOException e) {
-                    showError(e.getMessage());
-                }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                showMovie(tblviewMoviesInCategory.getSelectionModel().getSelectedItem());
             }
         });
         filterListener();
+    }
+
+    /**
+     * Function for opening movie
+     * @param v video to open
+     */
+    private void showMovie(Video v) {
+        try {
+            String path = v.getPath();
+            File f = new File(path);
+            if(f.isFile() && !f.isDirectory()) {
+                Video newVideo = v;
+                v.setLastView(LocalDate.now());
+                try {
+                    vMan.replace(v, newVideo);
+                    Desktop.getDesktop().open(f);
+                } catch(SQLException e) {
+                    showError(e.getMessage());
+                }
+            } else {
+                showError("File '" + path + "' does not exist!");
+            }
+        } catch(IOException e) {
+            showError(e.getMessage());
+        }
     }
 
     /**
@@ -388,6 +405,18 @@ public class mainViewController {
      */
     private void showError(String errorText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(ERROR_TITLE);
+        alert.setHeaderText(ERROR_HEADER);
+        alert.setContentText(errorText);
+        alert.showAndWait();
+    }
+
+    /**
+     * Private function for showing warning
+     * @param errorText
+     */
+    private void showWarning(String errorText) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(ERROR_TITLE);
         alert.setHeaderText(ERROR_HEADER);
         alert.setContentText(errorText);

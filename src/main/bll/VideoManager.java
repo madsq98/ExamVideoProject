@@ -6,7 +6,10 @@ import main.be.Video;
 import main.dal.VideoRepository;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.regex.Pattern;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class VideoManager {
     private ObservableList<Video> videos;
@@ -75,6 +78,29 @@ public class VideoManager {
      */
     public ObservableList<Video> getAllVideos() {
         return videos;
+    }
+
+    /**
+     * Gets list of old & low-rated videos
+     * @return list of videos
+     */
+    public ObservableList<Video> getOldVideos() {
+        ObservableList<Video> returnList = FXCollections.observableArrayList();
+        int daysToBeOld = (2 * 365);
+        int lowRating = 6;
+
+        for(Video v : videos) {
+            LocalDate lastSeen = v.getLastView();
+            LocalDate today = LocalDate.now();
+            double rating = v.getRating();
+            int daysBetween = (int) DAYS.between(lastSeen,today);
+
+            if(daysBetween > daysToBeOld && rating < lowRating) {
+                returnList.add(v);
+            }
+        }
+
+        return returnList;
     }
 
     /**
